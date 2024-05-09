@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrainTrek - Home</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+  }
+  header {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 135px;
+  }
+  header .highlight {
+    color: #000000;
+    font-size: xx-large;
+  }
+  header .highlight-yellow {
+    color: #f2b92b;
+    font-size: xx-large;
+  }
+  .content {
+    text-align: left;
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    font-size: x-large;
+  }
+  .highlighted {
+    padding: 10px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  .small {
+    font-size: large;
+  }
+  .btn {
+    background-color: #f2b92b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: xx-large;
+  }
+  .btn:hover {
+    background-color: #e6e600;
+  }
+  .about span {
+    margin-right: 20px;
+    color: #f2b92b;
+  }
+  .imagein {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    margin-right: 10px;
+    margin-top: 50px;
+    width: 800px;
+    height: 500px;
+    opacity: 0.9;
+  }
+  .design {
+    position: absolute;
+    width: 100px;
+    margin-top: 0px;
+    bottom: 10px;
+    left: 93%;
+    opacity: 0.4;
+    transform: rotate(50deg);
+  }
+  .footer {
+    background-color: #f2b92b;
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  .footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .footer-section {
+    margin-bottom: 30px;
+  }
+  .footer-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .footer-section ul li {
+    margin-bottom: 5px;
+  }
+  .footer-section ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  .footer-bottom {
+    margin-top: 30px;
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <span class="highlight"><b>Brain</b></span><span class="highlight-yellow"><b>Trek</b></span>
+    </div>
+    <nav class="about">
+      <span>How it works?</span>
+      <span>Features</span>
+      <span>About Us</span>
+    </nav>
+  </header>
+  <div class="content">
+    <h1><span class="highlighted">Explore, Learn, and <br><br>Have Fun with our<br><br>General Knowledge Quizzes</span></h1>
+    <p class="small">| We help you prepare for exams and quizzes.</p>
+    <a href="/SignInForm"><button class="btn">Start Solving</button></a>
+  </div>
+  <div class="image">
+    <img class="imagein" src="https://st3.depositphotos.com/16959514/32686/v/600/depositphotos_326860374-stock-illustration-people-ask-question-confused-person.jpg" alt="main-img">
+  </div>
+  <img class="design" src="https://i.pinimg.com/736x/01/b6/d2/01b6d278bdc2fb92452736ee6db4f89e.jpg" alt="design">
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>BrainTrek is a dedicated platform committed to providing you with high-quality educational resources and interactive quizzes. Our goal is to empower learners like you to excel in your learning journey by offering engaging content that enhances your knowledge and skills. Whether you're preparing for exams, expanding your general knowledge, or exploring new subjects, BrainTrek is here to support and guide you every step of the way.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/quizzes">Quizzes</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: contact@braintrek.com</p>
+        <p>Phone: +1-123-456-7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 BrainTrek. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
