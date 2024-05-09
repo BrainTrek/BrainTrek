@@ -6,7 +6,7 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins',sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
 
     .head {
@@ -23,16 +23,16 @@
       color: black;
     }
 
-    .login {
-      font-weight: bold;
+    .logout {
+      /* font-weight: bold; */
       color: white;
-      font-size: xx-large;
+      font-size: large;
       text-decoration: none;
       transition-duration: 0.4s;
       cursor: pointer;
     }
 
-    .login:hover {
+    .logout:hover {
       background-color: white;
       color: #FECC2C;
       border-radius: 85px;
@@ -78,15 +78,23 @@
       margin-bottom: 10px;
     }
 
-    .front-content {
-      display: block;
+    .front-content, .back-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .back-content {
       display: none;
       transform: rotateY(180deg);
     }
-    
+
     #b1 {
       order: 1;
     }
@@ -123,7 +131,7 @@
 <body>
   <div class="head">
     <h1><span class="brain">Brain</span>Trek</h1>
-    <a href="" class="login"> &emsp;Login&emsp;</a>
+    <a href="{{ url_for('logout') }}" class="logout"> &emsp;LogOut&emsp;</a>
   </div>
   <div class="boxes-container">
     <div class="box-container" id="b1" onclick="flipBox(event, this)">
@@ -131,10 +139,11 @@
         <div class="front-content">
           <img
             src="https://s3-alpha-sig.figma.com/img/e6a5/254a/f4a91cf6193f384a17f5e8e170519e14?Expires=1716163200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UGBJMbiJCUFNc77Olx5aKO3fPDUNYkJfaNASMEer6NPO5gdn1b3aoDMr4qu-X1VWB9vZf77Zs3eUC~vd28Lz0WaoM9AMNU0DGrF9oP5ZbO6LJ4GXda52HHHB2joFGr-YaoWhsL99v-R4K2vUDvQldqaU5z-uRvG4A6vEziHGSZV5EBRNWvDBkO9R29-VO1rsj9G~p8RW8vmApQ7XNaCYdLCryWIAmXjUAj~9ZQ-Yt112s-tRzl3qdjAT13zieuBMztykOJRH7wDK48J~9wKOCq9LEkMhV987EiPjHEQwe0nTJMIOa7DdkDbNRxCxPy97gZEDXn3pGsBehLoSiLVh0A__">
-          <p>These quizzes are designed to help school children unleash their knowledge.</p>
+          <p>These quizzes are designed to help school children unleash their General Knowledge.</p>
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
-          <h2>Select the Standard</h2><p>&emsp13;</p>
+          <h2>Select the Standard</h2>
+          <p>&emsp;</p>
           <select name="standard" id="standard" onchange="flipBack(this)">
             <option value="1">Standard 1</option>
             <option value="2">Standard 2</option>
@@ -147,7 +156,6 @@
             <option value="9">Standard 9</option>
             <option value="10">Standard 10</option>
           </select>
-          <p>&emsp13;</p>
         </div>
       </div>
     </div>
@@ -159,9 +167,6 @@
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
           <div class="option-container">
-            <h2>Exam Type</h2>
-            <label><input type="radio" name="exam" value="Mains">Mains</label>
-            <label><input type="radio" name="exam" value="Prilims">Prilims</label>
             <label><input type="radio" name="exam" value="Interview">Interview</label>
           </div>
         </div>
@@ -187,39 +192,64 @@
 
   <script>
     function flipBox(event, element) {
+      // Reset all flipped cards except the clicked one
+      document.querySelectorAll('.box').forEach(function(box) {
+        if (box !== element.querySelector('.box')) {
+          box.classList.remove('flip');
+          box.closest('.box-container').querySelectorAll('.back-content').forEach(function(content) {
+            content.style.display = 'none';
+          });
+          box.closest('.box-container').querySelectorAll('.front-content').forEach(function(content) {
+            content.style.display = 'block';
+          });
+        }
+      });
+  
+      var box = element.querySelector('.box');
+      var isFlipped = box.classList.contains('flip');
+  
       if (event.target.classList.contains('back-content') || event.target.classList.contains('box')) {
         return;
       }
-
-      var box = element.querySelector('.box');
-      box.classList.toggle('flip');
-
-      if (box.classList.contains('flip')) {
-        element.querySelectorAll('.front-content').forEach(function (content) {
+  
+      if (isFlipped) {
+        // If already flipped, flip it back
+        box.classList.remove('flip');
+        element.querySelectorAll('.back-content').forEach(function(content) {
           content.style.display = 'none';
         });
-        element.querySelectorAll('.back-content').forEach(function (content) {
+        element.querySelectorAll('.front-content').forEach(function(content) {
+          content.style.display = 'block';
+        });
+      } else {
+        // If not flipped, flip it
+        box.classList.add('flip');
+        element.querySelectorAll('.front-content').forEach(function(content) {
+          content.style.display = 'none';
+        });
+        element.querySelectorAll('.back-content').forEach(function(content) {
           content.style.display = 'block';
         });
       }
     }
-
+  
     function flipBack(select) {
       var boxContainer = select.closest('.box-container');
       var box = boxContainer.querySelector('.box');
       box.classList.remove('flip');
-      boxContainer.querySelectorAll('.back-content').forEach(function (content) {
+      boxContainer.querySelectorAll('.back-content').forEach(function(content) {
         content.style.display = 'none';
       });
-      boxContainer.querySelectorAll('.front-content').forEach(function (content) {
+      boxContainer.querySelectorAll('.front-content').forEach(function(content) {
         content.style.display = 'block';
       });
     }
-
+  
     function stopPropagation(event) {
       event.stopPropagation();
     }
   </script>
+  
 </body>
 
 </html>

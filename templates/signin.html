@@ -1,131 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>React Components to HTML & CSS</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  .container {
-    display: flex;
-    height: 100vh;
-  }
-  .heading {
-    color: black;
-  }
-  .left-partition {
-    flex: 1;
-    background-color: #f2b92b;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .right-partition {
-    flex: 1;
-    background-color: white;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .signin-heading {
-    font-size: 30px;
-    margin-bottom: 20px;
-    color: black;
-  }
-  .signin-form {
-    text-align: center;
-  }
-  .form-input {
-    margin-bottom: 10px;
-    width: 250px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .signup-button,
-  .signin-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .signup-button {
-    background-color: white;
-    color: rgb(215, 215, 9);
-    font-weight: bolder;
-    font-size: medium;
-  }
-  .signin-button {
-    background-color: #f2b92b;
-    color: white;
-    font-weight: bolder;
-    font-size: medium;
-  }
-  .social-icons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  .social-icons div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .social-icons i {
-    font-size: 30px;
-    margin-bottom: 5px;
-    color: #007bff;
-    cursor: pointer;
-  }
-  .signuse {
-    color: black;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainTrek Sign In</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .heading {
+            color: black;
+        }
+        .left-partition {
+            flex: 1;
+            background-color: #f2b92b;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .right-partition {
+            flex: 1;
+            background-color: white;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .signin-heading {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: black;
+        }
+        .signin-form {
+            text-align: center;
+        }
+        .form-input {
+            margin-bottom: 10px;
+            width: 250px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .signin-button {
+            padding: 10px 20px;
+            background-color: #f2b92b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .social-icons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .social-icons div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .social-icons i {
+            font-size: 30px;
+            margin-bottom: 5px;
+            color: #007bff;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="left-partition">
-      <h1 class="heading">HELLO FRIEND !!</h1>
-      <h3>WE HELP YOU TO UNLEASH <br>YOUR KNOWLEDGE...</h3>
-      <a href="/signup"><button class="signup-button">SIGN UP</button></a>
-    </div>
-    <div class="right-partition" id="signup">
-      <h1 class="signin-heading">Sign In</h1>
-      <form class="signin-form">
-        <input type="email" class="form-input" placeholder="Email" />
-        <br>
-        <input type="password" class="form-input" placeholder="Password" />
-        <br>
-        <button type="submit" class="signin-button">SIGN IN</button>
-        <br>
-        <h4>OR</h4>
-        <h4 class="signuse">Sign In with your...</h4>
-        <div class="social-icons">
-          <div>
-            <i class="fa-brands fa-google"></i>
-            <span>Google</span>
-          </div>
-          <div>
-            <i class="fa-solid fa-envelope"></i>
-            <span>Gmail</span>
-          </div>
-          <div>
-            <i class="fab fa-windows"></i>
-            <span>Microsoft</span>
-          </div>
+    <div class="container">
+        <div class="left-partition">
+            <h1 class="heading">HELLO FRIEND !!</h1>
+            <h3>WE HELP YOU TO UNLEASH <br>YOUR KNOWLEDGE...</h3>
+            <a href="{{ url_for('signup') }}"><button class="signup-button">SIGN UP</button></a>
         </div>
-      </form>
+        <div class="right-partition" id="signup">
+            <h1 class="signin-heading">Sign In</h1>
+            <form class="signin-form" action="{{ url_for('signin') }}" method="post">
+                <input type="email" class="form-input" placeholder="Email" name="email" required>
+                <br>
+                <input type="password" class="form-input" placeholder="Password" name="password" required>
+                <br>
+                <button type="submit" class="signin-button">SIGN IN</button>
+                <br>
+              </form>
+                <h4>OR</h4>
+                <a href="{{ url_for('signin_google') }}"><button class="signin-button">Sign In with Google</button></a>
+        </div>
     </div>
-  </div>
 </body>
 </html>

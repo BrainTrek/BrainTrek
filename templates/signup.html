@@ -1,96 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up Form</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  .container {
-    display: flex;
-    height: 100vh;
-  }
-  .left-partition {
-    flex: 1;
-    background-color: white;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .right-partition {
-    flex: 1;
-    background-color: #f2b92b;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .signin-form {
-    text-align: center;
-  }
-  .form-input {
-    margin-bottom: 10px;
-    width: 250px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .signup-button {
-    padding: 10px 20px;
-    background-color: #f2b92b;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .signin-button {
-    padding: 10px 20px;
-    background-color: white;
-    color: #f2b92b;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  h2, h1, .h11 {
-    color: black;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainTrek Sign Up</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .left-partition {
+            flex: 1;
+            background-color: white;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .right-partition {
+            flex: 1;
+            background-color: #f2b92b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .signin-form {
+            text-align: center;
+        }
+        .form-input {
+            margin-bottom: 10px;
+            width: 250px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .signup-button {
+            padding: 10px 20px;
+            background-color: #f2b92b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .signin-button {
+            padding: 10px 20px;
+            background-color: white;
+            color: #f2b92b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        h2, h1, .h11 {
+            color: black;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="left-partition">
-      <h1>CREATE ACCOUNT</h1>
-      <br>
-      <form class='signup-form'>
-        <input type="name" class="form-input" placeholder="Name" name="name" required>
-        <br>
-        <input type="email" class="form-input" placeholder="Email" name="email" required>
-        <br>
-        <input type="password" class="form-input" placeholder="Password" name="password" required>
-        <br>
-        <input type="confirm-password" class="form-input" placeholder="Confirm - Password" required>
-        <br>
-        <button class="signup-button" type='submit'>SIGN UP</button>
-        <br>
-      </form>
-      Or
-      <h3>Sign Up using</h3>
+    <div class="container">
+        <div class="left-partition">
+            <h1>CREATE ACCOUNT</h1>
+            <br>
+            <form class='signup-form' action="{{ url_for('signup') }}" method="post">
+                <input type="name" class="form-input" placeholder="Name" name="name" required>
+                <br>
+                <input type="email" class="form-input" placeholder="Email" name="email" required>
+                <br>
+                <input type="password" class="form-input" placeholder="Password" name="password" required>
+                <br>
+                <input type="password" class="form-input" placeholder="Confirm Password" name="confirm-password" required>
+                <br>
+                <button class="signup-button" type='submit'>SIGN UP</button>
+                <br>
+              </form>
+                <p>Or</p>
+                <a href="{{ url_for('signin_google') }}"><button class="signin-button">Sign Up with Google</button></a>
+        </div>
+        <div class="right-partition">
+            <h1 class="h11">WELCOME BACK!!!</h1>
+            <form class="signin-form">
+                <h2>Let's dive into another round of <br> learning and discovery...</h2>
+                <br>
+                <a href="{{ url_for('signin') }}"><button class="signin-button">SIGN IN</button></a>
+            </form>
+        </div>
     </div>
-    <div class="right-partition">
-      <h1 class="h11">WELCOME BACK!!!</h1>
-      <form class="signin-form">
-        <h2>Let's dive into another round of <br> learning and discovery...</h2>
-        <br>
-      </form>
-      <a href="/sigin"><button class="signin-button">SIGN IN</button></a>
-    </div>
-  </div>
 </body>
 </html>
