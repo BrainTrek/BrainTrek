@@ -1,13 +1,17 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from authlib.integrations.flask_client import OAuth
+from jinja2 import FileSystemLoader
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from pymongo import MongoClient
 import cohere
+from cohere import Client
 from urllib.parse import urlencode
 import json
 
 app = Flask(__name__)
+
+app.jinja_loader = FileSystemLoader(searchpath=['views', 'templates'])
 
 client = MongoClient("mongodb+srv://21pa1a12a5:Svsp9721@cluster0.n3mmdua.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["BrainTrek"]
@@ -90,13 +94,25 @@ def main():
 def quiz():
     if request.method == 'POST':
         selected_option = request.form['quiz_option']
-        client = cohere.Client(api_key="your_api_key")
-        response = client.generate_quiz(prompt=selected_option)
+        prompt = f"Create a multiple-choice quiz question based on the topic: '{selected_option}'. Provide four options as answers, including the correct one."
+        client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
+        response = client.chat(message=prompt)
         quiz_data = response.text
-        # Store quiz data in MongoDB
-        # mongo.db.quizzes.insert_one({'user_id': current_user.id, 'quiz_data': quiz_data})
-        # return redirect(url_for('quiz_result', quiz_id=mongo.db.quizzes.inserted_id))
-    return render_template('quiz.html')
+        print(quiz_data)
+
+        if "Options:" in quiz_data:
+            options_start_index = quiz_data.index("Options:") + len("Options:")
+            options_text = quiz_data[options_start_index:]
+            options = options_text.split(", ")  # Assuming options are comma-separated
+        else:
+            options = []  # Handle case where "Options:" is not found
+
+        print(selected_option,quiz_data,options)
+
+        # Store quiz data in MongoDB or perform further actions
+        # ...
+
+    return render_template('quiz.ejs', selected_option=selected_option, quiz_data=quiz_data, options=options)
 
 @app.route('/quiz/<quiz_id>')
 def quiz_result(quiz_id):

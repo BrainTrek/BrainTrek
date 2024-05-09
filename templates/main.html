@@ -42,15 +42,15 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      padding: 20px;
-      position: relative;
+      /* position: relative; */
     }
 
     .box-container {
       width: 200px;
-      height: 200px;
+      height: 250px;
       margin: 10px;
       position: relative;
+      padding: 50px;
     }
 
     .box {
@@ -59,7 +59,7 @@
       height: 100%;
       text-align: center;
       line-height: 1.5;
-      padding: 20px;
+      padding: 30px;
       border-radius: 20px;
       background-color: #FECC2C;
       color: black;
@@ -95,7 +95,7 @@
       transform: rotateY(180deg);
     }
 
-    #b1 {
+    /* #b1 {
       order: 1;
     }
 
@@ -106,14 +106,13 @@
     #b3 {
       order: 3;
       position: absolute;
-      top: calc(100% + 30px);
       left: 50%;
       transform: translateX(-50%);
-    }
+    } */
 
-    .box-container:nth-child(1) {
+    /* .box-container:nth-child(1) {
       margin-right: 300px;
-    }
+    } */
 
     .option-container {
       display: flex;
@@ -142,20 +141,23 @@
           <p>These quizzes are designed to help school children unleash their General Knowledge.</p>
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
-          <h2>Select the Standard</h2>
-          <p>&emsp;</p>
-          <select name="standard" id="standard" onchange="flipBack(this)">
-            <option value="1">Standard 1</option>
-            <option value="2">Standard 2</option>
-            <option value="3">Standard 3</option>
-            <option value="4">Standard 4</option>
-            <option value="5">Standard 5</option>
-            <option value="6">Standard 6</option>
-            <option value="7">Standard 7</option>
-            <option value="8">Standard 8</option>
-            <option value="9">Standard 9</option>
-            <option value="10">Standard 10</option>
-          </select>
+          <form method="post" action="/quiz">
+            <h2>Select the Standard</h2>
+            <p>&emsp;</p>
+            <select name="standard" id="standard">
+              <option value="1">Standard 1</option>
+              <option value="2">Standard 2</option>
+              <option value="3">Standard 3</option>
+              <option value="4">Standard 4</option>
+              <option value="5">Standard 5</option>
+              <option value="6">Standard 6</option>
+              <option value="7">Standard 7</option>
+              <option value="8">Standard 8</option>
+              <option value="9">Standard 9</option>
+              <option value="10">Standard 10</option>
+            </select>
+            <input type="submit" value="Start Quiz">
+          </form>
         </div>
       </div>
     </div>
@@ -166,9 +168,13 @@
           <p>This will help serve as a valuable preparation tool for UPSC candidates.</p>
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
-          <div class="option-container">
-            <label><input type="radio" name="exam" value="Interview">Interview</label>
-          </div>
+          <form method="post" action="/quiz">
+            <div class="option-container">
+              <h2>Interview Round</h2>
+              <label><input type="radio" name="quiz_option" value="UPSC Interview">UPSC Interview</label>
+            </div>
+            <input type="submit" value="Start Quiz">
+          </form>
         </div>
       </div>
     </div>
@@ -179,12 +185,14 @@
           <p>This will help you improve your interview skills.</p>
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
-          <div class="option-container">
-            <h2>Interview Round</h2>
-            <label><input type="radio" name="round" value="Aptitude">Aptitude</label>
-            <label><input type="radio" name="round" value="Technical">Technical</label>
-            <label><input type="radio" name="round" value="HR">HR Round</label>
-          </div>
+          <form method="post" action="/quiz">
+            <div class="option-container">
+              <label><input type="radio" name="quiz_option" value="Technical Interview">Technical Interview</label>
+              <label><input type="radio" name="quiz_option" value="HR Interview">HR Interview</label>
+              <label><input type="radio" name="quiz_option" value="Aptitude">Aptitude</label>
+            </div>
+            <input type="submit" value="Start Quiz">
+          </form>
         </div>
       </div>
     </div>

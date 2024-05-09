@@ -41,5 +41,16 @@
     <h1><span class="brain">Brain</span>Trek</h1>
     <a href="#" class="profile-icon"><i class="fas fa-user-circle"></i></a> <!-- Profile icon using Font Awesome -->
   </div>
+  <h1>Quiz App</h1>
+    <h2>Topic: <%= selected_option %></h2>
+
+    <h3>Question: <%= quiz_data %></h3>
+
+    <!-- Loop through options and display them -->
+    <ul>
+        <% for (let i = 0; i < options.length; i++) { %>
+            <li><%= options[i] %></li>
+        <% } %>
+    </ul>
 </body>
 </html>
