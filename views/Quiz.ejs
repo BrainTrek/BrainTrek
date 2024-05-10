@@ -1,63 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz App</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<style>
-  .head {
-    background-color: #FECC2C;
-    color: white;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-  }
-
-  .brain {
-    color: black;
-  }
-
-  .profile-icon {
-    color: white;
-    font-size: xx-large;
-    text-decoration: none;
-    transition-duration: 0.4s;
-    cursor: pointer;
-  }
-
-  .profile-icon:hover {
-    background-color: white;
-    color: #FECC2C;
-    border-radius: 50%;
-    padding: 5px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Add your CSS styles here */
+    </style>
 </head>
 <body>
-  <div class="head">
-    <h1><span class="brain">Brain</span>Trek</h1>
-    <a href="#" class="profile-icon"><i class="fas fa-user-circle"></i></a>
-  </div>
-  <h1>Quiz App</h1>
-  <h2>Topic: <%= selected_option %></h2>
-  <form method="post">
-    <% let questions = quiz_data.split('Question:').slice(1) -%>
+    <h1>Quiz App</h1>
+    <h2>Topic: <%= selected_option %></h2>
+
     <% for (let i = 0; i < questions.length; i++) { %>
-      <h3>Question <%= i + 1 %>: <%= questions[i].split('\n')[0] %></h3>
-      <ul>
-        <% let options = options[i] -%>
-        <% for (let j = 0; j < options.length; j++) { %>
-          <li>
-            <input type="radio" id="<%= j %>" name="user_answer[<%= i %>]" value="<%= options[j] %>">
-            <label for="<%= j %>"><%= options[j] %></label>
-          </li>
-        <% } %>
-      </ul>
+        <h3>Question <%= i + 1 %>: <%= questions[i] %></h3>
+        <ul>
+            <% for (let j = 0; j < options_list[i].length; j++) { %>
+                <li>
+                    <input type="radio" id="option_<%= i %>_<%= j %>" name="question_<%= i %>" value="<%= options_list[i][j] %>">
+                    <label for="option_<%= i %>_<%= j %>"><%= options_list[i][j] %></label>
+                </li>
+            <% } %>
+        </ul>
     <% } %>
+
     <button type="submit">Submit Quiz</button>
-  </form>
 </body>
 </html>

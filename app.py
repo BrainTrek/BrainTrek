@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from authlib.integrations.flask_client import OAuth
 from jinja2 import FileSystemLoader
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from pymongo import MongoClient
+import requests
+import re
 import cohere
+from cohere.client import CohereClient
 from cohere import Client
 from urllib.parse import urlencode
 import json
@@ -89,48 +92,88 @@ def main():
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
+    selected_option = None
     if request.method == 'POST':
         selected_option = request.form['quiz_option']
-        prompt = f"Create 50 multiple-choice quiz questions based on the topic: '{selected_option}'. Provide four options as answers separately, mention the correct one individually."
+        prompt = f"Create 2 multiple-choice quiz questions and their options and answers based on the topic: '{selected_option}'. Format each question as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
 
         # Send API request to Cohere and get the response
-        cohere_client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
         response = cohere_client.chat(message=prompt)
         quiz_data = response.text
+        print(quiz_data)
 
-        if "Options:" in quiz_data:
-            options_start = quiz_data.index("Options:") + len("Options:")
-            options_text = quiz_data[options_start:]
-            options_list = options_text.split(", ")
-            correct_options_start = quiz_data.index("Answer:") + len("Answer:")
-            correct_options_text = quiz_data[correct_options_start:]
-            correct_options = correct_options_text.splitlines()
-            correct_options_dict = {}
-            for option in correct_options:
-                option = option.strip()
-                correct_options_dict[option] = True
-        else:
-            options_list = []
-            correct_options_dict = {}
+        # Extract questions, options, and answers using regular expressions
+        questions = re.findall(r'Question (\d+): (.+?)\n', quiz_data, re.DOTALL)
+        options = re.findall(r'Option [A-D]: (.+?)\n', quiz_data, re.DOTALL)
+        answers = re.findall(r'Answer: (.+?)\n', quiz_data, re.DOTALL)
 
-        questions = quiz_data.split('Question:')[1:]
-        questions_with_options = []
-        for i, question in enumerate(questions, start=1):
-            question_text = question.split('\n')[0]
-            options = options_list[:4] if len(options_list) >= 4 else options_list
-            options_dict = {option.strip(): False for option in options}
-            for option in options:
-                if option in correct_options_dict:
-                    options_dict[option] = True
-            questions_with_options.append({'question': question_text, 'options': options_dict, 'number': i})
-            options_list = options_list[4:]
+        # Create a list of dictionaries for each question
+        json_data = []
+        for i in range(len(questions)):
+            question_dict = {
+                "question": questions[i][1].strip(),
+                "options": options[i * 4:(i * 4) + 4],
+                "answer": answers[i].strip()
+            }
+            json_data.append(question_dict)
 
-        quiz_id = str(quizzes.insert_one({'topic': selected_option, 'questions': questions_with_options}).inserted_id)
+        # Convert the list of dictionaries to JSON
+        json_string = json.dumps(json_data, indent=2)
+        print(json_string)
 
-        # Render the quiz.ejs template with the quiz data
-        return render_template('quiz.ejs', selected_option=selected_option, quiz_data=quiz_data, options_list=options_list)
+    return render_template('quiz.ejs', selected_option=selected_option)
 
-    return render_template('quiz.ejs', selected_option=None)
+
+#         for i, question in enumerate(questions, start=1):
+#             print(f"Question {i}: {question}")
+#             for j, option in enumerate(options[i - 1], start=1):
+#                 print(f"{j}. {option}")
+#             print(f"Answer: {answers[i - 1]}")
+#         # Store the quiz data in the database
+#         # quiz_id = str(quizzes.insert_one({'topic': selected_option, 'questions': questions, 'options': options_list, 'answers': answers}).inserted_id)
+
+#         # Render the quiz.ejs template with the quiz data
+#         # return render_template('quiz.ejs', selected_option=selected_option, quiz_id=quiz_id, questions=questions, options_list=options_list)
+
+#     return render_template('quiz.ejs', selected_option=None)
+
+# @app.route('/quiz', methods=['POST'])
+# def quiz():
+#     # Prepare the API request payload
+#     payload = {
+#         "instructions": "Generate a 10-question quiz on general knowledge, with each question having four multiple-choice options and one correct answer. Number the questions and provide a clear format for each question, option, and correct answer. Also, provide the lists of questions, options, and correct answers separately in the response.",
+#         "context": "This is a general knowledge quiz.",
+#         "models": ["command"]
+#     }
+
+#     # Call the Cohere API
+#     headers = {
+#         'Authorization': 'api_key 0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa',
+#     }
+
+#     response = requests.post('https://api.cohere.com/predict', json=payload, headers=headers)
+
+#     # Parse the API response
+#     data = response.json()
+#     generated_text = data['results'][0]['generated_text']
+
+#     # Split the generated text into lists of questions, options, and correct answers
+#     questions = []
+#     options = []
+#     correct_answers = []
+
+#     for i in range(0, len(generated_text), 5):
+#         question_block = generated_text[i:i+5]
+#         question = question_block[0].strip()
+#         options.append(question_block[1:])
+#         questions.append(question)
+
+#         correct_answer_index = question_block[4].find(')') + 1
+#         correct_answer = question_block[4][correct_answer_index:].strip()
+#         correct_answers.append(correct_answer)
+
+#     # Return the lists of questions, options, and correct answers
+#     print(jsonify({"questions": questions, "options": options, "correct_answers": correct_answers}))
 
 @app.route('/quiz/<quiz_id>', methods=['GET', 'POST'])
 def quiz_result(quiz_id):

@@ -62,14 +62,15 @@
     <h1>Quiz Result</h1>
     <div class="quiz-result">
       <h2>Score: <%= score %>%</h2>
-      <% let questions = quiz_data.split('Question:').slice(1) -%>
+      <% let questions = questions -%>
+      <% let answers = answers -%>
+      <% let options_list = options_list -%>
       <% for (let i = 0; i < questions.length; i++) { %>
-        <div class="question">Question <%= i + 1 %>: <%= questions[i].split('\n')[0] %></div>
+        <div class="question">Question <%= i + 1 %>: <%= questions[i] %></div>
         <ul>
-          <% let options = options[i] -%>
-          <% for (let j = 0; j < options.length; j++) { %>
-            <% let isCorrect = options[j].endsWith('Answer:') -%>
-            <li><span class="<%= isCorrect ? 'correct' : 'incorrect' %>"><%= options[j].replace('Answer:', '') %></span></li>
+          <% for (let j = 0; j < options_list[i].length; j++) { %>
+            <% let isCorrect = answers[i] == options_list[i][j] -%>
+            <li><span class="<%= isCorrect ? 'correct' : 'incorrect' %>"><%= options_list[i][j] %></span></li>
           <% } %>
         </ul>
       <% } %>
