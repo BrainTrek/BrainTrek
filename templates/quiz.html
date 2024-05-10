@@ -3,56 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BrainTrek</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .answer{
+        .head {
+            background-color: #FECC2C;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .brain {
+            color: black;
+        }
+
+        .profile-icon {
+            color: white;
+            font-size: large;
+            text-decoration: none;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .profile-icon:hover {
+            background-color: white;
+            color: #FECC2C;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .answer {
+            display: none;
+        }
+
+        #score {
+            display: none;
+        }
+
+        #mainButton {
             display: none;
         }
     </style>
 </head>
 <body>
-    <div>
-    {% for i in obj %}
-        <p>Q{{loop.index}}.&nbsp;{{i["Question"]}}</p>
-        <input type="radio" name="A{{loop.index}}">A.&nbsp;{{i["Options"]["Option A"]}}<br>
-        <input type="radio" name="A{{loop.index}}">B.&nbsp;{{i["Options"]["Option B"]}}<br>
-        <input type="radio" name="A{{loop.index}}">C.&nbsp;{{i["Options"]["Option C"]}}<br>
-        <input type="radio" name="A{{loop.index}}">D.&nbsp;{{i["Options"]["Option D"]}}<br><br>
-        <p class="answer">Correct Answer.&nbsp;{{ i["Answer"] }}</p>
-        <!-- <button class="ans_display" onclick="showAnswer(this)">Show answer</button><br> -->
-    {%endfor%}
-    <button>Submit</button>
+    <div class="head">
+        <h1><span class="brain">Brain</span>Trek</h1>
+        <a href="{{ url_for('logout') }}" class="profile-icon"> &emsp;LogOut&emsp;<i class="fas fa-user-circle"></i></a>
+    </div>
+    <div id="quiz">
+        {% for i, question in obj | enumerate %}
+            <p>Q{{ i + 1 }}. {{ question["Question"] }}</p>
+            {% for option, text in question["Options"].items() %}
+                <input type="radio" id="{{ option }}-Q{{ i + 1 }}" name="Q{{ i + 1 }}" value="{{ option }}">
+                <label for="{{ option }}-Q{{ i + 1 }}">{{ text }}</label><br>
+            {% endfor %}
+            <p class="answer">{{ question["Answer"] }}</p>
+            <hr>
+        {% endfor %}
+        <button id="submitButton">Submit</button>
+        <p id="score">Score: <span id="scoreValue">0</span>/{{ obj | length }}</p>
+        <a href="{{ url_for('main') }}" class="profile-icon"><button id="mainButton">Go to Main Page<i class="fas fa-home"></i></button></a>
     </div>
 
     <script>
-
-        function showAnswer(button) {
-            // Get the next sibling of the button, which is the answer element
-            let answer = button.previousElementSibling;
-
-            // Toggle the display of the answer element
-            if (answer.style.display === 'none' || answer.style.display === '') {
-                answer.style.display = 'block';
-                button.textContent = 'Hide Answer';
-            } else {
-                answer.style.display = 'none';
-                button.textContent = 'Show Answer';
-            }
+        // Custom enumerate function
+        function enumerate(iterable, start = 0) {
+            return iterable.map((value, index) => [index + start, value]);
         }
 
-        
-        // ans_display.forEach((element) => {
-        //     element.addEventListener("click", () => {
-        //         if (answer.style.display === "none" || answer.style.display === "") {
-        //             answer.style.display = "block";
-        //             element.textContent = "Hide Answer";
-        //         } else {
-        //             answer.style.display = "none";
-        //             element.textContent = "Show answer";
-        //         }
-        //     });
-        // });
+        const submitButton = document.getElementById("submitButton");
+        const scoreValue = document.getElementById("scoreValue");
+        const mainButton = document.getElementById("mainButton");
+        const quiz = document.getElementById("quiz");
 
+        submitButton.addEventListener("click", function () {
+            let score = 0;
+            for (let i = 1; i <= quiz.getElementsByTagName("p").length / 2; i++) {
+                const selectedOption = document.querySelector(`input[name="Q${i}"]:checked`);
+                if (selectedOption) {
+                    const correctAnswerElement = quiz.querySelector(`.answer:nth-of-type(${2 * i})`);
+                    const correctAnswerText = correctAnswerElement.textContent.trim();
+
+                    // Extract selected option part from correct answer text
+                    const selectedOptionPart = correctAnswerText.split('. ')[0].trim();
+
+                    console.log("Selected Option:", selectedOption.value);
+                    console.log("Correct Answer:", selectedOptionPart);
+
+                    if (selectedOption.value === selectedOptionPart) {
+                        score++;
+                    }
+
+                    // Display correct answer
+                    correctAnswerElement.style.display = "block";
+                }
+            }
+
+            // Display score and main button
+            document.getElementById("score").style.display = "block";
+            scoreValue.textContent = score;
+            document.getElementById("mainButton").style.display = "block";
+        });
     </script>
 </body>
 </html>
