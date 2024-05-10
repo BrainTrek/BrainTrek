@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BrainTrek</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Include Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Include Font Awesome CSS -->
   <style>
     body {
       margin: 0;
@@ -16,7 +18,6 @@
       background-color: #FECC2C;
       color: white;
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
@@ -27,7 +28,6 @@
     }
 
     .profile-icon {
-      /* font-weight: bold; */
       color: white;
       font-size: large;
       text-decoration: none;
@@ -45,15 +45,15 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      /* position: relative; */
     }
 
     .box-container {
       width: 200px;
-      height: 250px;
+      height: 350px; /* Adjusted height */
       margin: 10px;
       position: relative;
       padding: 50px;
+      overflow: hidden; /* Added overflow property */
     }
 
     .box {
@@ -69,6 +69,7 @@
       transition: transform 0.8s;
       cursor: pointer;
       font-size: 15px;
+      transform-style: preserve-3d; /* Added for 3D effect */
     }
 
     .box.flip {
@@ -81,7 +82,8 @@
       margin-bottom: 10px;
     }
 
-    .front-content, .back-content {
+    .front-content,
+    .back-content {
       position: absolute;
       top: 0;
       left: 0;
@@ -91,6 +93,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      backface-visibility: hidden; /* Added for 3D effect */
     }
 
     .back-content {
@@ -108,8 +111,25 @@
     .option-container label {
       margin-bottom: 10px;
     }
+
+    .inputTypeQuiz {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .inputTypeQuiz form {
+      display: flex;
+      align-items: center;
+    }
+
+    .inputTypeQuiz input[type="text"],
+    .inputTypeQuiz input[type="submit"] {
+      margin-right: 10px;
+    }
   </style>
 </head>
+
 <body>
   <div class="head">
     <h1><span class="brain">Brain</span>Trek</h1>
@@ -119,8 +139,7 @@
     <div class="box-container" id="b1" onclick="flipBox(event, this)">
       <div class="box">
         <div class="front-content">
-          <img
-            src="https://s3-alpha-sig.figma.com/img/e6a5/254a/f4a91cf6193f384a17f5e8e170519e14?Expires=1716163200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UGBJMbiJCUFNc77Olx5aKO3fPDUNYkJfaNASMEer6NPO5gdn1b3aoDMr4qu-X1VWB9vZf77Zs3eUC~vd28Lz0WaoM9AMNU0DGrF9oP5ZbO6LJ4GXda52HHHB2joFGr-YaoWhsL99v-R4K2vUDvQldqaU5z-uRvG4A6vEziHGSZV5EBRNWvDBkO9R29-VO1rsj9G~p8RW8vmApQ7XNaCYdLCryWIAmXjUAj~9ZQ-Yt112s-tRzl3qdjAT13zieuBMztykOJRH7wDK48J~9wKOCq9LEkMhV987EiPjHEQwe0nTJMIOa7DdkDbNRxCxPy97gZEDXn3pGsBehLoSiLVh0A__">
+          <img src="https://s3-alpha-sig.figma.com/img/e6a5/254a/f4a91cf6193f384a17f5e8e170519e14?Expires=1716163200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UGBJMbiJCUFNc77Olx5aKO3fPDUNYkJfaNASMEer6NPO5gdn1b3aoDMr4qu-X1VWB9vZf77Zs3eUC~vd28Lz0WaoM9AMNU0DGrF9oP5ZbO6LJ4GXda52HHHB2joFGr-YaoWhsL99v-R4K2vUDvQldqaU5z-uRvG4A6vEziHGSZV5EBRNWvDBkO9R29-VO1rsj9G~p8RW8vmApQ7XNaCYdLCryWIAmXjUAj~9ZQ-Yt112s-tRzl3qdjAT13zieuBMztykOJRH7wDK48J~9wKOCq9LEkMhV987EiPjHEQwe0nTJMIOa7DdkDbNRxCxPy97gZEDXn3pGsBehLoSiLVh0A__">
           <p>These quizzes are designed to help school children unleash their General Knowledge.</p>
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
@@ -189,62 +208,60 @@
 
   <script>
     function flipBox(event, element) {
-      // Reset all flipped cards except the clicked one
-      document.querySelectorAll('.box').forEach(function(box) {
+      document.querySelectorAll('.box').forEach(function (box) {
         if (box !== element.querySelector('.box')) {
           box.classList.remove('flip');
-          box.closest('.box-container').querySelectorAll('.back-content').forEach(function(content) {
+          box.closest('.box-container').querySelectorAll('.back-content').forEach(function (content) {
             content.style.display = 'none';
           });
-          box.closest('.box-container').querySelectorAll('.front-content').forEach(function(content) {
+          box.closest('.box-container').querySelectorAll('.front-content').forEach(function (content) {
             content.style.display = 'block';
           });
         }
       });
-  
+
       var box = element.querySelector('.box');
       var isFlipped = box.classList.contains('flip');
-  
+
       if (event.target.classList.contains('back-content') || event.target.classList.contains('box')) {
         return;
       }
-  
+
       if (isFlipped) {
-        // If already flipped, flip it back
         box.classList.remove('flip');
-        element.querySelectorAll('.back-content').forEach(function(content) {
+        element.querySelectorAll('.back-content').forEach(function (content) {
           content.style.display = 'none';
         });
-        element.querySelectorAll('.front-content').forEach(function(content) {
+        element.querySelectorAll('.front-content').forEach(function (content) {
           content.style.display = 'block';
         });
       } else {
-        // If not flipped, flip it
         box.classList.add('flip');
-        element.querySelectorAll('.front-content').forEach(function(content) {
+        element.querySelectorAll('.front-content').forEach(function (content) {
           content.style.display = 'none';
         });
-        element.querySelectorAll('.back-content').forEach(function(content) {
+        element.querySelectorAll('.back-content').forEach(function (content) {
           content.style.display = 'block';
         });
       }
     }
-  
+
     function flipBack(select) {
       var boxContainer = select.closest('.box-container');
       var box = boxContainer.querySelector('.box');
       box.classList.remove('flip');
-      boxContainer.querySelectorAll('.back-content').forEach(function(content) {
+      boxContainer.querySelectorAll('.back-content').forEach(function (content) {
         content.style.display = 'none';
       });
-      boxContainer.querySelectorAll('.front-content').forEach(function(content) {
+      boxContainer.querySelectorAll('.front-content').forEach(function (content) {
         content.style.display = 'block';
       });
     }
-  
+
     function stopPropagation(event) {
       event.stopPropagation();
     }
   </script>
 </body>
+
 </html>

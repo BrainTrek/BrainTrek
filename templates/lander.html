@@ -10,14 +10,16 @@
     margin: 0;
     padding: 0;
     background-color: white;
+    overflow-x: hidden;
   }
+  
   header {
     background-color: white;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 135px;
+    height: 100px;
   }
   header .highlight {
     color: #000000;
@@ -33,23 +35,26 @@
     margin-left: 50px;
     margin-right: 50px;
     margin-bottom: 50px;
-    font-size: x-large;
+    font-size:larger;
   }
   .highlighted {
-    padding: 10px;
+
     font-weight: bold;
     margin-bottom: 30px;
-  }
+    font-family:cursive  
+}
   .small {
     font-size: large;
+    font-family: 'Times New Roman', Times, serif;
   }
   .btn {
     background-color: #f2b92b;
+    font-family: cursive;
     color: white;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 20px;
     text-transform: uppercase;
     font-size: xx-large;
   }
@@ -60,9 +65,17 @@
     margin-right: 20px;
     color: #f2b92b;
   }
+  .abt{
+    cursor: pointer;
+  }
+  .abt:hover{
+    color: white;
+    background-color:#f2b92b ;
+    transition-duration:400ms;
+  }
   .imagein {
     position: absolute;
-    top: 100px;
+    top: 80px;
     right: 10px;
     margin-right: 10px;
     margin-top: 50px;
@@ -74,45 +87,54 @@
     position: absolute;
     width: 100px;
     margin-top: 0px;
-    bottom: 10px;
-    left: 93%;
+    bottom: 100px;
+    left: 98%;
     opacity: 0.4;
     transform: rotate(50deg);
   }
   .footer {
-    background-color: #f2b92b;
-    color: white;
-    padding: 50px 20px;
-    text-align: center;
-  }
-  .footer-content {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-  .footer-section {
-    margin-bottom: 30px;
-  }
-  .footer-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  .footer-section ul li {
-    margin-bottom: 5px;
-  }
-  .footer-section ul li a {
-    color: white;
-    text-decoration: none;
-  }
-  .footer-bottom {
-    margin-top: 30px;
-    font-size: 0.8rem;
-  }
+  background-color: #f2b92b;
+  color: white;
+  padding: 30px 20px; /* Reduced padding for decreased height */
+  text-align: center;
+  
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  margin-bottom: 20px; /* Reduced margin for compactness */
+}
+
+.footer-section h3 {
+  font-size: 1.2rem; /* Slightly reduced font size */
+  margin-bottom: 8px; /* Reduced margin for compactness */
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 3px; /* Reduced margin for compactness */
+}
+
+.footer-section ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  margin-top: 20px; /* Reduced margin for compactness */
+  font-size: 0.8rem;
+}
+
 </style>
 </head>
 <body>
@@ -121,14 +143,14 @@
       <span class="highlight"><b>Brain</b></span><span class="highlight-yellow"><b>Trek</b></span>
     </div>
     <nav class="about">
-      <span>How it works?</span>
-      <span>Features</span>
-      <span>About Us</span>
+      <span class="abt">How it works?</span>
+      <span class="abt">Features</span>
+      <span class="abt">About Us</span>
     </nav>
   </header>
   <div class="content">
     <h1><span class="highlighted">Explore, Learn, and <br><br>Have Fun with our<br><br>General Knowledge Quizzes</span></h1>
-    <p class="small">| We help you prepare for exams and quizzes.</p>
+    <p class="small">| We help you to prepare for exams with quizzes.</p>
     <a href="{{ url_for('signin') }}"><button class="btn">Start Solving</button></a>
   </div>
   <div class="image">
@@ -139,7 +161,7 @@
     <div class="footer-content">
       <div class="footer-section">
         <h3>About Us</h3>
-        <p>BrainTrek is a dedicated platform committed to providing you with high-quality educational resources and interactive quizzes. Our goal is to empower learners like you to excel in your learning journey by offering engaging content that enhances your knowledge and skills. Whether you're preparing for exams, expanding your general knowledge, or exploring new subjects, BrainTrek is here to support and guide you every step of the way.</p>
+        <p>BrainTrek provides high-quality educational resources and quizzes, <br>empowering learners to excel in their journey.</p>
       </div>
       <div class="footer-section">
         <h3>Quick Links</h3>
@@ -160,5 +182,6 @@
       <p>&copy; 2024 BrainTrek. All rights reserved.</p>
     </div>
   </footer>
+  
 </body>
 </html>

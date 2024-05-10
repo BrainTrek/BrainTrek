@@ -16,47 +16,75 @@
         }
         .heading {
             color: black;
+            margin-bottom: 10px;
+            font-size: 3em;
+            font-weight: bold;
+            text-align: center;
+            font-family: cursive;
         }
-        .left-partition {
-            flex: 1;
-            background-color: #f2b92b;
+        .sub-heading {
             color: black;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            margin-bottom: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
         }
+        .left-partition,
         .right-partition {
             flex: 1;
-            background-color: white;
-            color: black;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 20px;
+        }
+        .left-partition {
+            background-color: #f2b92b;
+        }
+        .right-partition {
+            background-color: white;
+        }
+        .form-container {
+            max-width: 400px;
+            width: 100%;
         }
         .signin-heading {
             font-size: 30px;
             margin-bottom: 20px;
             color: black;
+            text-align: center;
         }
         .signin-form {
             text-align: center;
         }
         .form-input {
             margin-bottom: 10px;
-            width: 250px;
-            padding: 8px;
+            width: 100%;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
         }
+        
         .signin-button {
             padding: 10px 20px;
-            background-color: #f2b92b;
-            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-weight: bold;
+        }
+        .signup-button {
+            padding: 10px 20px;
+            background-color:white;
+            color: #f2b92b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .signin-button {
+            background-color: #f2b92b;
+            color: white;
         }
         .social-icons {
             margin-top: 20px;
@@ -82,21 +110,23 @@
     <div class="container">
         <div class="left-partition">
             <h1 class="heading">HELLO FRIEND !!</h1>
-            <h3>WE HELP YOU TO UNLEASH <br>YOUR KNOWLEDGE...</h3>
+            <h3 class="sub-heading">WE HELP YOU TO UNLEASH <br>YOUR KNOWLEDGE...</h3>
             <a href="{{ url_for('signup') }}"><button class="signup-button">SIGN UP</button></a>
         </div>
-        <div class="right-partition" id="signup">
+        <div class="right-partition">
             <h1 class="signin-heading">Sign In</h1>
-            <form class="signin-form" action="{{ url_for('signin') }}" method="post">
-                <input type="email" class="form-input" placeholder="Email" name="email" required>
-                <br>
-                <input type="password" class="form-input" placeholder="Password" name="password" required>
-                <br>
-                <button type="submit" class="signin-button">SIGN IN</button>
-                <br>
-              </form>
-                <h4>OR</h4>
-                <a href="{{ url_for('signin_google') }}"><button class="signin-button">Sign In with Google</button></a>
+            <div class="form-container">
+                <form class="signin-form" action="{{ url_for('signin') }}" method="post">
+                    <input type="email" class="form-input" placeholder="Email" name="email" required>
+                    <br>
+                    <input type="password" class="form-input" placeholder="Password" name="password" required>
+                    <br>
+                    <button type="submit" class="signin-button">SIGN IN</button>
+                    <br>
+                </form>
+                <center><h4>OR</h4></center>
+                <center><a href="{{ url_for('signin_google') }}"><button class="signin-button">Sign In with Google</button></a></center>
+            </div>
         </div>
     </div>
 </body>

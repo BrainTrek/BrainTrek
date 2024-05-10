@@ -32,7 +32,7 @@
             justify-content: center;
             align-items: center;
         }
-        .signin-form {
+        .signup-form {
             text-align: center;
         }
         .form-input {
@@ -49,6 +49,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-weight: bold;
         }
         .signin-button {
             padding: 10px 20px;
@@ -57,17 +58,29 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-weight: bold;
         }
-        h2, h1, .h11 {
+        h2,.h11 {
             color: black;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            
+        }
+        .wb{
+            color: black;
+            font-family: cursive;
+            font-size: 3em;
+
+        }
+        p{
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="left-partition">
-            <h1>CREATE ACCOUNT</h1>
-            <br>
+            <h1 class="h11">CREATE ACCOUNT</h1>
             <form class='signup-form' action="{{ url_for('signup') }}" method="post">
                 <input type="name" class="form-input" placeholder="Name" name="name" required>
                 <br>
@@ -79,15 +92,15 @@
                 <br>
                 <button class="signup-button" type='submit'>SIGN UP</button>
                 <br>
-              </form>
-                <p>Or</p>
-                <a href="{{ url_for('signin_google') }}"><button class="signin-button">Sign Up with Google</button></a>
+            </form>
+            <p>OR</p>
+            <a href="{{ url_for('signin_google') }}"><button class="signup-button">Sign Up with Google</button></a>
         </div>
         <div class="right-partition">
-            <h1 class="h11">WELCOME BACK!!!</h1>
-              <h2>Let's dive into another round of <br> learning and discovery...</h2>
-              <br>
-              <a href="{{ url_for('signin') }}"><button class="signin-button">SIGN IN</button></a>
+            <h1 class="wb">WELCOME BACK!!!</h1>
+            <h2>Let's dive into another round of <br> learning and discovery...</h2>
+            <br>
+            <a href="{{ url_for('signin') }}"><button class="signin-button">SIGN IN</button></a>
         </div>
     </div>
 </body>
