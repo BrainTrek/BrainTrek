@@ -7,7 +7,6 @@ from pymongo import MongoClient
 import requests
 import re
 import cohere
-from cohere.client import CohereClient
 from cohere import Client
 from urllib.parse import urlencode
 import json
@@ -92,20 +91,22 @@ def main():
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
-    selected_option = None
     if request.method == 'POST':
         selected_option = request.form['quiz_option']
         prompt = f"Create 2 multiple-choice quiz questions and their options and answers based on the topic: '{selected_option}'. Format each question as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
 
         # Send API request to Cohere and get the response
+        # Replace 'YOUR_COHERE_API_KEY' with your actual API key
+        cohere_client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
         response = cohere_client.chat(message=prompt)
         quiz_data = response.text
         print(quiz_data)
 
-        # Extract questions, options, and answers using regular expressions
         questions = re.findall(r'Question (\d+): (.+?)\n', quiz_data, re.DOTALL)
         options = re.findall(r'Option [A-D]: (.+?)\n', quiz_data, re.DOTALL)
         answers = re.findall(r'Answer: (.+?)\n', quiz_data, re.DOTALL)
+
+        print(questions,options,answers)
 
         # Create a list of dictionaries for each question
         json_data = []
@@ -120,8 +121,7 @@ def quiz():
         # Convert the list of dictionaries to JSON
         json_string = json.dumps(json_data, indent=2)
         print(json_string)
-
-    return render_template('quiz.ejs', selected_option=selected_option)
+    return render_template('quiz.ejs', selected_option=None)
 
 
 #         for i, question in enumerate(questions, start=1):
