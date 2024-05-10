@@ -16,6 +16,7 @@ app.jinja_loader = FileSystemLoader(searchpath=['views', 'templates'])
 client = MongoClient("mongodb+srv://21pa1a12a5:Svsp9721@cluster0.n3mmdua.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 db = client["BrainTrek"]
 users = db["users"]
+quizzes = db["quizzes"]
 
 appConf = {
     "OAUTH2_CLIENT_ID": "800948137796-11mkomvfo2gpqb55bl130td54j8sf2f6.apps.googleusercontent.com",
@@ -78,56 +79,73 @@ def signin_google():
 
 @app.route('/authorized/google')
 def authorized_google():
-    # me = google.get('oauth2/v1/userinfo')
-    # user_email = me.data['email']
-    # Store user data in MongoDB or perform further actions
     token = oauth.myApp.authorize_access_token()
     session["user"] = token
     return redirect(url_for('main'))
 
 @app.route('/main')
 def main():
-    # Rest of your main route code here
     return render_template('main.html', session=session.get("user"))
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
     if request.method == 'POST':
         selected_option = request.form['quiz_option']
-        prompt = f"Create a multiple-choice quiz question based on the topic: '{selected_option}'. Provide four options as answers, including the correct one."
-        client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
-        response = client.chat(message=prompt)
+        prompt = f"Create 50 multiple-choice quiz questions based on the topic: '{selected_option}'. Provide four options as answers separately, mention the correct one individually."
+
+        # Send API request to Cohere and get the response
+        cohere_client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
+        response = cohere_client.chat(message=prompt)
         quiz_data = response.text
-        print(quiz_data)
 
         if "Options:" in quiz_data:
-            options_start_index = quiz_data.index("Options:") + len("Options:")
-            options_text = quiz_data[options_start_index:]
-            options = options_text.split(", ")  # Assuming options are comma-separated
+            options_start = quiz_data.index("Options:") + len("Options:")
+            options_text = quiz_data[options_start:]
+            options_list = options_text.split(", ")
+            correct_options_start = quiz_data.index("Answer:") + len("Answer:")
+            correct_options_text = quiz_data[correct_options_start:]
+            correct_options = correct_options_text.splitlines()
+            correct_options_dict = {}
+            for option in correct_options:
+                option = option.strip()
+                correct_options_dict[option] = True
         else:
-            options = []  # Handle case where "Options:" is not found
+            options_list = []
+            correct_options_dict = {}
 
-        print(selected_option,quiz_data,options)
+        questions = quiz_data.split('Question:')[1:]
+        questions_with_options = []
+        for i, question in enumerate(questions, start=1):
+            question_text = question.split('\n')[0]
+            options = options_list[:4] if len(options_list) >= 4 else options_list
+            options_dict = {option.strip(): False for option in options}
+            for option in options:
+                if option in correct_options_dict:
+                    options_dict[option] = True
+            questions_with_options.append({'question': question_text, 'options': options_dict, 'number': i})
+            options_list = options_list[4:]
 
-        # Store quiz data in MongoDB or perform further actions
-        # ...
+        quiz_id = str(quizzes.insert_one({'topic': selected_option, 'questions': questions_with_options}).inserted_id)
 
-    return render_template('quiz.ejs', selected_option=selected_option, quiz_data=quiz_data, options=options)
+        # Render the quiz.ejs template with the quiz data
+        return render_template('quiz.ejs', selected_option=selected_option, quiz_data=quiz_data, options_list=options_list)
 
-@app.route('/quiz/<quiz_id>')
+    return render_template('quiz.ejs', selected_option=None)
+
+@app.route('/quiz/<quiz_id>', methods=['GET', 'POST'])
 def quiz_result(quiz_id):
-    # quiz = mongo.db.quizzes.find_one({'_id': ObjectId(quiz_id)})
-    # if quiz:
-    #     return render_template('quiz_result.html', quiz_data=quiz['quiz_data'])
-    # else:
-    #     flash('Quiz not found')
-    #     return redirect(url_for('index'))
-    return "Quiz result page for quiz ID: " + quiz_id
+    quiz = quizzes.find_one({'_id': ObjectId(quiz_id)})
+    if quiz:
+        if request.method == 'POST':
+            user_answers = request.form.getlist('user_answer')
+            correct_answers = list(quiz['options'].keys())
+            correct_count = sum(1 for user_answer in user_answers if user_answer in correct_answers)
 
-# @app.route('/history')
-# def history():
-#     user_quizzes = mongo.db.quizzes.find({'user_id': current_user.id})
-#     return render_template('history.html', quizzes=user_quizzes)
+            score = int((correct_count / len(correct_answers)) * 100)
+
+            return render_template('quiz_result.html', quiz_data=quiz['questions'], options=quiz['options'], score=score)
+
+    return "Quiz result page for quiz ID: " + quiz_id
 
 @app.route('/logout')
 def logout():
