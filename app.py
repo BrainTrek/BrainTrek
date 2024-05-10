@@ -143,7 +143,7 @@ def quiz():
         # Print the JSON formatted data
         print(json_data)
         print(quiz_data)
-    return render_template('quiz.ejs', selected_option=selected_option, quiz_data=quiz_data)
+    return render_template('quiz.html', selected_option=selected_option, quiz_data=quiz_data)
 
 @app.route('/quiz/<quiz_id>', methods=['GET', 'POST'])
 def quiz_result(quiz_id):

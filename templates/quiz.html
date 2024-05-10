@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .answer{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    {% for i in obj %}
+        <p>Q{{loop.index}}.&nbsp;{{i["Question"]}}</p>
+        <input type="radio" name="A{{loop.index}}">A.&nbsp;{{i["Options"]["Option A"]}}<br>
+        <input type="radio" name="A{{loop.index}}">B.&nbsp;{{i["Options"]["Option B"]}}<br>
+        <input type="radio" name="A{{loop.index}}">C.&nbsp;{{i["Options"]["Option C"]}}<br>
+        <input type="radio" name="A{{loop.index}}">D.&nbsp;{{i["Options"]["Option D"]}}<br><br>
+        <p class="answer">Correct Answer.&nbsp;{{ i["Answer"] }}</p>
+        <!-- <button class="ans_display" onclick="showAnswer(this)">Show answer</button><br> -->
+    {%endfor%}
+    <button>Submit</button>
+    </div>
+
+    <script>
+
+        function showAnswer(button) {
+            // Get the next sibling of the button, which is the answer element
+            let answer = button.previousElementSibling;
+
+            // Toggle the display of the answer element
+            if (answer.style.display === 'none' || answer.style.display === '') {
+                answer.style.display = 'block';
+                button.textContent = 'Hide Answer';
+            } else {
+                answer.style.display = 'none';
+                button.textContent = 'Show Answer';
+            }
+        }
+
+        
+        // ans_display.forEach((element) => {
+        //     element.addEventListener("click", () => {
+        //         if (answer.style.display === "none" || answer.style.display === "") {
+        //             answer.style.display = "block";
+        //             element.textContent = "Hide Answer";
+        //         } else {
+        //             answer.style.display = "none";
+        //             element.textContent = "Show answer";
+        //         }
+        //     });
+        // });
+
+    </script>
+</body>
+</html>
