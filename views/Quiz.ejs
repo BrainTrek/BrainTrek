@@ -1,3 +1,4 @@
+<!-- quiz.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,18 +14,61 @@
     <h1>Quiz App</h1>
     <h2>Topic: <%= selected_option %></h2>
 
-    <% for (let i = 0; i < questions.length; i++) { %>
-        <h3>Question <%= i + 1 %>: <%= questions[i] %></h3>
+    <!-- Debugging: Display selected_option and quiz_data -->
+    <div>Selected Option: <%= JSON.stringify(selected_option) %></div>
+    <div>Quiz Data: <%= JSON.stringify(quiz_data) %></div>
+
+    <!-- Iterate through each question -->
+    <% for (let questionNumber in quiz_data) { %>
+        <h3>Question <%= questionNumber.replace('question', '') %>: <%= quiz_data[questionNumber].query %></h3>
+
+        <!-- Display options for the current question -->
         <ul>
-            <% for (let j = 0; j < options_list[i].length; j++) { %>
+            <% for (let option in quiz_data[questionNumber].options) { %>
                 <li>
-                    <input type="radio" id="option_<%= i %>_<%= j %>" name="question_<%= i %>" value="<%= options_list[i][j] %>">
-                    <label for="option_<%= i %>_<%= j %>"><%= options_list[i][j] %></label>
+                    <%= quiz_data[questionNumber].options[option] %>
                 </li>
             <% } %>
         </ul>
     <% } %>
 
-    <button type="submit">Submit Quiz</button>
+    <!-- Submit button -->
+    <button id="submitButton">Submit Quiz</button>
+
+    <!-- JavaScript code to handle quiz submission -->
+    <script>
+        const quizData = JSON.parse(JSON.stringify(quiz_data));
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitButton = document.querySelector('#submitButton');
+
+            submitButton.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                // Get selected options
+                const selectedOptions = [];
+                for (let questionNumber in quizData) {
+                    const selectedOption = document.querySelector(`input[name="question_${questionNumber}"]:checked`);
+                    if (!selectedOption) {
+                        alert('Please answer all questions.');
+                        return;
+                    }
+                    selectedOptions.push(selectedOption.value);
+                }
+
+                // Evaluate selected options against correct answers
+                let score = 0;
+                for (let questionNumber in quizData) {
+                    const correctAnswer = quizData[questionNumber].answer;
+                    if (selectedOptions.includes(correctAnswer)) {
+                        score++;
+                    }
+                }
+
+                // Display score to the user
+                alert(`Your score: ${score} out of ${Object.keys(quizData).length}`);
+            });
+        });
+    </script>
 </body>
 </html>

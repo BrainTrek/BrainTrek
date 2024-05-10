@@ -99,81 +99,51 @@ def quiz():
         # Replace 'YOUR_COHERE_API_KEY' with your actual API key
         cohere_client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
         response = cohere_client.chat(message=prompt)
-        quiz_data = response.text
+        # print(response)
+        quiz_data_text = response.text
+        question_pattern = r"Question (\d+): (.+)"
+        option_pattern = r"Option [A-D]: (.+)"
+        answer_pattern = r"Answer: (Option [A-D]).*$"
+
+        # Initialize an empty dictionary to store the questions and their details
+        quiz_data = {}
+        current_question = None
+
+        # Split the text into lines
+        lines = quiz_data_text.splitlines()
+
+        for line in lines:
+            # Find and process question lines
+            match = re.match(question_pattern, line)
+            if match:
+                question_num = match.group(1)
+                question_text = match.group(2)
+                current_question = f"question{question_num}"
+                quiz_data[current_question] = {"query": question_text, "options": {}, "answer": None}
+                continue
+
+            # Find and process option lines
+            match = re.match(option_pattern, line)
+            if match:
+                option_text = match.group(1)
+                option_letter = line[line.find("Option") : line.find(":")]
+                quiz_data[current_question]["options"][option_letter] = option_text
+                continue
+
+            # Find and process answer lines
+            match = re.match(answer_pattern, line)
+            if match:
+                answer_text = match.group(1)
+                answer_option = line[line.find("Option") : line.find(".")]
+                quiz_data[current_question]["answer"] = f"{answer_option}. {answer_text}"
+
+        # Convert the dictionary to JSON format
+        json_data = json.dumps(quiz_data, indent=2)
+
+        # Print the JSON formatted data
+        print(json_data)
         print(quiz_data)
-
-        questions = re.findall(r'Question (\d+): (.+?)\n', quiz_data, re.DOTALL)
-        options = re.findall(r'Option [A-D]: (.+?)\n', quiz_data, re.DOTALL)
-        answers = re.findall(r'Answer: (.+?)\n', quiz_data, re.DOTALL)
-
-        print(questions,options,answers)
-
-        # Create a list of dictionaries for each question
-        json_data = []
-        for i in range(len(questions)):
-            question_dict = {
-                "question": questions[i][1].strip(),
-                "options": options[i * 4:(i * 4) + 4],
-                "answer": answers[i].strip()
-            }
-            json_data.append(question_dict)
-
-        # Convert the list of dictionaries to JSON
-        json_string = json.dumps(json_data, indent=2)
-        print(json_string)
-    return render_template('quiz.ejs', selected_option=None)
-
-
-#         for i, question in enumerate(questions, start=1):
-#             print(f"Question {i}: {question}")
-#             for j, option in enumerate(options[i - 1], start=1):
-#                 print(f"{j}. {option}")
-#             print(f"Answer: {answers[i - 1]}")
-#         # Store the quiz data in the database
-#         # quiz_id = str(quizzes.insert_one({'topic': selected_option, 'questions': questions, 'options': options_list, 'answers': answers}).inserted_id)
-
-#         # Render the quiz.ejs template with the quiz data
-#         # return render_template('quiz.ejs', selected_option=selected_option, quiz_id=quiz_id, questions=questions, options_list=options_list)
-
-#     return render_template('quiz.ejs', selected_option=None)
-
-# @app.route('/quiz', methods=['POST'])
-# def quiz():
-#     # Prepare the API request payload
-#     payload = {
-#         "instructions": "Generate a 10-question quiz on general knowledge, with each question having four multiple-choice options and one correct answer. Number the questions and provide a clear format for each question, option, and correct answer. Also, provide the lists of questions, options, and correct answers separately in the response.",
-#         "context": "This is a general knowledge quiz.",
-#         "models": ["command"]
-#     }
-
-#     # Call the Cohere API
-#     headers = {
-#         'Authorization': 'api_key 0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa',
-#     }
-
-#     response = requests.post('https://api.cohere.com/predict', json=payload, headers=headers)
-
-#     # Parse the API response
-#     data = response.json()
-#     generated_text = data['results'][0]['generated_text']
-
-#     # Split the generated text into lists of questions, options, and correct answers
-#     questions = []
-#     options = []
-#     correct_answers = []
-
-#     for i in range(0, len(generated_text), 5):
-#         question_block = generated_text[i:i+5]
-#         question = question_block[0].strip()
-#         options.append(question_block[1:])
-#         questions.append(question)
-
-#         correct_answer_index = question_block[4].find(')') + 1
-#         correct_answer = question_block[4][correct_answer_index:].strip()
-#         correct_answers.append(correct_answer)
-
-#     # Return the lists of questions, options, and correct answers
-#     print(jsonify({"questions": questions, "options": options, "correct_answers": correct_answers}))
+    return render_template('quiz.ejs', selected_option=selected_option, quiz_data=quiz_data)
 
 @app.route('/quiz/<quiz_id>', methods=['GET', 'POST'])
 def quiz_result(quiz_id):
