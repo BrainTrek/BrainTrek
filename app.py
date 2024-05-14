@@ -133,7 +133,7 @@ def gkquiz():
 def quiz():
     if request.method == 'POST':
         selected_option = request.form['quiz_option']
-        prompt = f"Create 25 multiple-choice quiz questions and their options and answers based on the topic: '{selected_option}' and that questions doesn't be generated for a question on images like what is the output of the code or like that also note that don't generate same set of questions repeatedly for consecutive times. Format each question as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
+        prompt = f"Create 25 multiple-choice quiz questions and their options and answers based on the topic: '{selected_option}' and that questions doesn't be generated for a question on images like what is the output of the code or like that also note that don't generate same set of questions repeatedly for consecutive times and Make sure to generate all the questions and their options with answers correctly and they have to be visible. Format each question as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
 
         # Send API request to Cohere and get the response
         # Replace 'YOUR_COHERE_API_KEY' with your actual API key
