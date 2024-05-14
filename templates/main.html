@@ -269,10 +269,72 @@
     margin-top: 20px; /* Reduced margin for compactness */
     font-size: 0.8rem;
   }
+  #ring{
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .lds-ring {
+  /* change color here */
+  color: #f2b92b;
+}
+.lds-ring,
+.lds-ring div {
+  box-sizing: border-box;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  transition: opacity 0.75s,visibility 0.75s;
+}
+.lds-ring-hidden{
+  opacity: 0;
+  visibility: hidden;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid currentColor;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: currentColor transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
   </style>
 </head>
 
 <body>
+  <div class="lds-ring" id="ring"><div></div><div></div><div></div><div></div></div>
     <!-- <header>
         <div>
           <span class="highlight">Brain</span><span class="highlight-yellow">Trek</span>
@@ -295,7 +357,7 @@
       <input type="submit" value="Start Quiz" class="submit">
     </form>
   </div>
-
+  
   <div class="boxes-container">
     <div class="box-container" id="b1" onclick="flipBox(event, this)">
       <div class="box">
@@ -390,8 +452,18 @@
       <p>&copy; 2024 BrainTrek. All rights reserved.</p>
     </div>
   </footer>
-
+  
   <script>
+
+  window.addEventListener("load", () => {
+    const loader = document.querySelector(".lds-ring");
+    loader.classList.add("lds-ring-hidden");
+
+    loader.addEventListener("transitionend", () => {
+      document.body.removeChild("lds-ring");
+    });
+  });
+
     
     function flipBox(event, element) {
       document.querySelectorAll('.box').forEach(function (box) {

@@ -101,15 +101,14 @@ def main():
 def gkquiz():
     if request.method == 'POST':
         selected_standard = request.form['standard']
-        prompt = f"Create 25 multiple-choice general knowledge quiz questions and their options and answers for a student of standard {selected_standard}th standard students and that questions doesn't be generated for a question on images like what is the output of the code or like that also note that don't generate same set of questions repeatedly for consecutive times. Format each question as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
-
+        prompt = f"Create 25 multiple-choice quiz questions and their options and answers based on the topic: '{selected_standard}' and ensure that questions related to images or code snippets or code outputs are not generated. Each question should be formatted as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer in th format 'Option X' with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
         # Send API request to Cohere and get the response
         cohere_client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
         response = cohere_client.chat(message=prompt)
         quiz_data_text = response.text
         questions = []
         current_question = {}
-
+        print(quiz_data_text.strip())
         lines = quiz_data_text.strip().split('\n')
         for line in lines:
             if line.startswith("Question"):
@@ -133,21 +132,21 @@ def gkquiz():
 def quiz():
     if request.method == 'POST':
         selected_option = request.form['quiz_option']
-        prompt = f"Create 25 multiple-choice quiz questions and their options and answers based on the topic: '{selected_option}' and that questions doesn't be generated for a question on images like what is the output of the code or like that also note that don't generate same set of questions repeatedly for consecutive times and Make sure to generate all the questions and their options with answers correctly and they have to be visible. Format each question as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
+        prompt = f"Create 25 multiple-choice quiz questions and their options and answers based on the topic: '{selected_option}' and ensure that questions related to images or code snippets or code outputs are not generated. Each question should be formatted as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer in th format 'Option X' with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
 
         # Send API request to Cohere and get the response
         # Replace 'YOUR_COHERE_API_KEY' with your actual API key
         cohere_client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
         response = cohere_client.chat(message=prompt)
-        # print(response)
+
         quiz_data_text = response.text
         questions = []
         current_question = {}
-
+        print(quiz_data_text.strip())
         lines = quiz_data_text.strip().split('\n')
-        # print(lines)
         for line in lines:
             if line.startswith("Question"):
+                print(line)
                 if current_question:
                     questions.append(current_question)
                     current_question = {}
@@ -163,15 +162,14 @@ def quiz():
 
         if current_question:
             questions.append(current_question)
-
+        # print(questions)
         return render_template("quiz.html",obj=questions)
     
 @app.route('/Topicquiz', methods=['GET', 'POST'])
 def Topicquiz():
     if request.method == 'POST':
         entered_topic = request.form['topic']
-        prompt = f"Create 25 multiple-choice quiz questions and their options and answers based on the topic: '{entered_topic}' and that questions doesn't be generated for a question on images like what is the output of the code or like that. Format each question as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
-
+        prompt = f"Create 25 multiple-choice quiz questions and their options and answers based on the topic: '{entered_topic}' and ensure that questions related to images or code snippets or code outputs are not generated. Each question should be formatted as 'Question X:', provide four multiple-choice options as 'Option A:', 'Option B:', 'Option C:', and 'Option D:', and mark the correct answer in th format 'Option X' with 'Answer:'. Please generate the questions, options, and answers in a clear and consistent format."
         # Send API request to Cohere and get the response
         # Replace 'YOUR_COHERE_API_KEY' with your actual API key
         cohere_client = cohere.Client(api_key="0Rd047SkwTFA2uOiHrSRbvcAZwH55eHLwfKr6YYa")
