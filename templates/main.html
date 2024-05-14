@@ -6,147 +6,306 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BrainTrek</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Kolker+Brush&display=swap" rel="stylesheet">
   <!-- Include Font Awesome CSS -->
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:
+    "wdth" 100,
+    "YTLC" 500;
     }
-
-    .head {
-      background-color: #FECC2C;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
+    /* header {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     }
+  .about span a{
+    color: black;
+    text-decoration: none;
+  }
+  .about span {
+    margin-left: 20px;
+    color: #f2b92b;
+  }
+  .abt{
+    cursor: pointer;
+  }
+  .abt a{
+    color: white;
+    background-color:#f2b92b ;
+    padding: 13px 10px;
+    border-radius: 10px;
+    position: absolute;
+    right: 9px;
+    top: 15px;
+  } */
+  .highlight {
+    color: #000000;
+    font-size: xx-large;
+    font-weight: 900;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
 
-    .brain {
-      color: black;
-    }
+  }
+  .highlight-yellow {
+    color: #f2b92b;
+    font-size: xx-large;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
 
-    .profile-icon {
-      color: white;
-      font-size: large;
-      text-decoration: none;
-      transition-duration: 0.4s;
-      cursor: pointer;
-    }
+  }
+  h1{
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
 
-    .profile-icon:hover {
-      background-color: white;
-      color: #FECC2C;
-      border-radius: 85px;
-    }
+  }
+  .head {
+    background-color: #FECC2C;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+  }
 
-    .boxes-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+  .brain {
+    color: black;
+  }
 
-    .box-container {
-      width: 200px;
-      height: 350px; /* Adjusted height */
-      margin: 10px;
-      position: relative;
-      padding: 50px;
-      overflow: hidden; /* Added overflow property */
-    }
+  .profile-icon {
+    color: black;
+    font-size: large;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
 
-    .box {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      line-height: 1.5;
-      padding: 30px;
-      border-radius: 20px;
-      background-color: #FECC2C;
-      color: black;
-      transition: transform 0.8s;
-      cursor: pointer;
+  .profile-icon:hover {
+    background-color: white;
+    color: #FECC2C;
+    border-radius: 10px;
+    padding: 5px 10px;
+  }
+
+  .boxes-container {
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+  }
+
+  .box-container {
+    width: 250px;
+    height: 450px; /* Adjusted height */
+    padding: 30px;
+    margin-right: 40px;
+  }
+
+  .box {
+    width: 100%;
+    height: 80%;
+    text-align: justify;
+    line-height: 1.5;
+    padding: 10px 30px;
+    border: 1px solid #FECC2C;
+    border-radius: 10px;
+    /* background-color: #FECC2C; */
+    color: black;
+    transition: transform 0.8s;
+    cursor: pointer;
+    font-size: 15px;
+    transform-style: preserve-3d; /* Added for 3D effect */
+    box-shadow: rgba(254, 204, 44,0.4) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+    
+  }
+  .box:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+
+  .box.flip {
+    transform: rotateY(180deg);
+  }
+
+  img {
+    width: 250px;
+    height: 150px;
+    margin-bottom: 10px;
+  }
+
+  .front-content,
+  .back-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    padding: 50px;
+  }
+
+  .back-content {
+    display: none;
+    transform: rotateY(180deg);
+    /* border: 1px solid black; */
+    /* text-align: center; */
+  }
+
+  .back-content .submit{
+    background: transparent;
+    border: none;
+    background-color: #FECC2C;
+    padding: 10px 14px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 30px;
+    left: 120px;
+  }
+
+  .back-content select{
+    width: 150px;
+    height: 30px;
+  }
+
+  .option-container label {
+    margin-bottom: 10px;
+  }
+
+  .inputTypeQuiz {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .inputTypeQuiz .topic{
+      height: 50px;
+      width: 400px;
+      border-radius: 10px;
+      border: 1px solid black;
       font-size: 15px;
-      transform-style: preserve-3d; /* Added for 3D effect */
-    }
+      text-align: center;
+  }
 
-    .box.flip {
-      transform: rotateY(180deg);
-    }
+  .inputTypeQuiz .submit{
+      background: transparent;
+      border: none;
+      background-color: #f2b92b;
+      padding: 10px;
+      border-radius: 10px;
+  }
 
-    img {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 10px;
-    }
+  .inputTypeQuiz form {
+    display: flex;
+    align-items: center;
+  }
 
-    .front-content,
-    .back-content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      backface-visibility: hidden; /* Added for 3D effect */
-    }
+  .inputTypeQuiz input[type="text"],
+  .inputTypeQuiz input[type="submit"] {
+    margin-right: 10px;
+  }
 
-    .back-content {
-      display: none;
-      transform: rotateY(180deg);
-    }
+  .footer {
+    background-color: black;
+    color: white;
+    padding: 30px 20px; /* Reduced padding for decreased height */
+    text-align: center;
+  }
+  .foot-highlight{
+    color: white;
+  }
+  .footer-content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .footer-section {
+    margin-bottom: 20px; /* Reduced margin for compactness */
+  }
 
-    .option-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
-    }
+  .footer-section h3 {
+    font-size: 1.2rem; /* Slightly reduced font size */
+    margin-bottom: 8px;
+  }
 
-    .option-container label {
-      margin-bottom: 10px;
-    }
-
-    .inputTypeQuiz {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .inputTypeQuiz form {
-      display: flex;
-      align-items: center;
-    }
-
-    .inputTypeQuiz input[type="text"],
-    .inputTypeQuiz input[type="submit"] {
-      margin-right: 10px;
-    }
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  .footer-section ul li {
+    margin-bottom: 3px; /* Reduced margin for compactness */
+  }
+  .footer-section ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  .footer-bottom {
+    margin-top: 20px; /* Reduced margin for compactness */
+    font-size: 0.8rem;
+  }
   </style>
 </head>
 
 <body>
+    <!-- <header>
+        <div>
+          <span class="highlight">Brain</span><span class="highlight-yellow">Trek</span>
+        </div>
+        <nav class="about">
+          <span class="abt" style="margin-left: 40px;">How it Works??</span>
+          <span class="abt">Features</span>
+          <span class="abt">Contact Us</span>
+          <span class="abt"><a href="{{ url_for('logout') }}" class="profile-icon">LogOut&nbsp;&nbsp;<i class="fas fa-user-circle"></i></a></span>
+        </nav>
+    </header><br><br> -->
   <div class="head">
     <h1><span class="brain">Brain</span>Trek</h1>
-    <a href="{{ url_for('logout') }}" class="profile-icon"> &emsp;LogOut&emsp;<i class="fas fa-user-circle"></i></a>
+    <a href="{{ url_for('logout') }}" class="profile-icon">LogOut&nbsp;<i class="fas fa-user-circle"></i></a>
   </div>
+  <br>
+  <div class="inputTypeQuiz">
+    <form method="post" action="/Topicquiz">
+      <input type="text" name="topic" placeholder="Enter a Topic on which the quiz has to be generated" class="topic">
+      <input type="submit" value="Start Quiz" class="submit">
+    </form>
+  </div>
+
   <div class="boxes-container">
     <div class="box-container" id="b1" onclick="flipBox(event, this)">
       <div class="box">
         <div class="front-content">
-          <img src="https://s3-alpha-sig.figma.com/img/e6a5/254a/f4a91cf6193f384a17f5e8e170519e14?Expires=1716163200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UGBJMbiJCUFNc77Olx5aKO3fPDUNYkJfaNASMEer6NPO5gdn1b3aoDMr4qu-X1VWB9vZf77Zs3eUC~vd28Lz0WaoM9AMNU0DGrF9oP5ZbO6LJ4GXda52HHHB2joFGr-YaoWhsL99v-R4K2vUDvQldqaU5z-uRvG4A6vEziHGSZV5EBRNWvDBkO9R29-VO1rsj9G~p8RW8vmApQ7XNaCYdLCryWIAmXjUAj~9ZQ-Yt112s-tRzl3qdjAT13zieuBMztykOJRH7wDK48J~9wKOCq9LEkMhV987EiPjHEQwe0nTJMIOa7DdkDbNRxCxPy97gZEDXn3pGsBehLoSiLVh0A__">
+          <img src="https://static.independent.co.uk/2021/08/13/12/GettyImages-170126264.jpg">
+          <!-- <img src="https://www.research-in-germany.org/dam/jcr:1e10a168-41cc-4655-8923-86da01270076/school_iStock-1358014313.jpg"> -->
           <p>These quizzes are designed to help school children unleash their General Knowledge.</p>
         </div>
-        <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
+        <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;" style="text-align: center;">
           <form method="post" action="/GKquiz">
             <h2>Select the Standard</h2>
-            <p>&emsp;</p>
-            <select name="standard" id="standard">
+            <center><select name="standard" id="standard" style="margin-top: 20px;">
               <option value="1">Standard 1</option>
               <option value="2">Standard 2</option>
               <option value="3">Standard 3</option>
@@ -157,8 +316,8 @@
               <option value="8">Standard 8</option>
               <option value="9">Standard 9</option>
               <option value="10">Standard 10</option>
-            </select>
-            <input type="submit" value="Start Quiz">
+            </select></center><br><br>
+            <center><input type="submit" value="Start Quiz" class="submit"></center>
           </form>
         </div>
       </div>
@@ -166,16 +325,16 @@
     <div class="box-container" id="b2" onclick="flipBox(event, this)">
       <div class="box">
         <div class="front-content">
-          <img src="https://media.licdn.com/dms/image/D5603AQE3RoU3quePOQ/profile-displayphoto-shrink_800_800/0/1702850790710?e=2147483647&v=beta&t=cP_TjPJeNju6FMY9Lki8hF_AzFkyw1iJ0rk3-m6T1-U">
+          <img src="https://www.siasat.com/wp-content/uploads/2024/04/UPSC-CSE-Results-2023.jpg">
           <p>This will help serve as a valuable preparation tool for UPSC candidates.</p>
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
           <form method="post" action="/quiz">
             <div class="option-container">
-              <h2>Interview Round</h2>
+              <h2>UPSC Round</h2>
               <label><input type="radio" name="quiz_option" value="UPSC Interview">UPSC Interview</label>
-            </div>
-            <input type="submit" value="Start Quiz">
+            </div><br>
+            <center><input type="submit" value="Start Quiz" class="submit"></center>
           </form>
         </div>
       </div>
@@ -183,30 +342,55 @@
     <div class="box-container" id="b3" onclick="flipBox(event, this)">
       <div class="box">
         <div class="front-content">
-          <img src="https://s3-alpha-sig.figma.com/img/7d7c/828b/9bec8c11d6e0e8db3473c24be53146a2?Expires=1716163200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ikQPkXzDM4Zd7X2a45I1tX3YR5RK-jK5GhbPTxq6te-9utv8hOjLbzSMiMS-XYVtjBVuQEq2rsa6qptc-RpdtXjI7ltK73CioGzhTBlf-uoeoY6f6syvBy6RmBV2agSMefKwMdE2o0OSaaUm-YQvxmyPQSFXwnjcV-3hdM4qAYirCIUOoQC4PgGLGqGTT0pM2hEosXZPaI4FUsMtkLLKlFsXtPSqGnzwcIo~vZFO-0wwFTlkLgtfCKV5Zd6NC8Kmzjei7IVyKFHAKMARh~YPp1d1OxjpV29vXjHuNpoia6AMXSJmAjKyQZ2DKSBg4KHbWa9Xv4gOMnKL-5ctNbK-TA__">
+          <img src="https://www.theforage.com/blog/wp-content/uploads/2023/04/What-Is-a-Panel-Interview.jpg">
           <p>This will help you improve your interview skills.</p>
         </div>
         <div class="back-content" onclick="stopPropagation(event)" style="background-color: lightyellow;">
           <form method="post" action="/quiz">
+            <h2>Interview Round</h2>
             <div class="option-container">
-              <label><input type="radio" name="quiz_option" value="Technical Interview">Technical Interview</label>
-              <label><input type="radio" name="quiz_option" value="HR Interview">HR Interview</label>
-              <label><input type="radio" name="quiz_option" value="Aptitude">Aptitude</label>
-            </div>
-            <input type="submit" value="Start Quiz">
+              <label><input type="radio" name="quiz_option" value="Technical Interview">Technical Interview</label><br>
+              <label><input type="radio" name="quiz_option" value="HR Interview">HR Interview</label><br>
+              <label><input type="radio" name="quiz_option" value="Aptitude">Aptitude</label><br>
+            </div><br>
+            <center><input type="submit" value="Start Quiz" class="submit"></center>
           </form>
         </div>
       </div>
     </div>
   </div>
-  <div class="inputTypeQuiz">
-    <form method="post" action="/Topicquiz">
-      <input type="text" name="topic" placeholder="Enter a Topic on which the quiz has to be generated">
-      <input type="submit" value="Start Quiz">
-    </form>
-  </div>
+
+  <footer class="footer" id="footer">
+    <div class="footer-content">
+      <div class="footer-section" style="margin-top: 70px;">
+        <span class="highlight foot-highlight">Brain</span><span class="highlight-yellow">Trek</span>
+      </div>
+      <div class="footer-section">
+        <h3>About Us</h3>
+        <p>BrainTrek provides high-quality educational resources and quizzes, <br>empowering learners to excel in their journey.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/quizzes">Quizzes</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: contact@braintrek.com</p>
+        <p>Phone: +1-123-456-7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 BrainTrek. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script>
+    
     function flipBox(event, element) {
       document.querySelectorAll('.box').forEach(function (box) {
         if (box !== element.querySelector('.box')) {
@@ -215,14 +399,13 @@
             content.style.display = 'none';
           });
           box.closest('.box-container').querySelectorAll('.front-content').forEach(function (content) {
-            content.style.display = 'block';
+            content.style.display = 'flex';
           });
         }
       });
 
       var box = element.querySelector('.box');
       var isFlipped = box.classList.contains('flip');
-
       if (event.target.classList.contains('back-content') || event.target.classList.contains('box')) {
         return;
       }

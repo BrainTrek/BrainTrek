@@ -4,161 +4,231 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BrainTrek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Kolker+Brush&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Fredericka+the+Great&family=Kolker+Brush&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: Arial, sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+    
+    body {
+    /* font-family: Arial, sans-serif; */
     margin: 0;
     padding: 0;
     background-color: white;
-    overflow-x: hidden;
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100,
+      "YTLC" 500;
   }
-  
+  .fredericka-the-great-regular {
+    font-family: "Fredericka the Great", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
   header {
     background-color: white;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
   }
-  header .highlight {
+  .highlight {
     color: #000000;
     font-size: xx-large;
+    font-weight: 900;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
   }
-  header .highlight-yellow {
+  .highlight-yellow {
     color: #f2b92b;
     font-size: xx-large;
-  }
-  .content {
-    text-align: left;
-    margin-top: 100px;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 50px;
-    font-size:larger;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+
   }
   .highlighted {
-
     font-weight: bold;
-    margin-bottom: 30px;
-    font-family:cursive  
-}
+    line-height: 1.6;
+  }
+  .mid-div{
+    display: flex;
+  }
+  .mid-div div{
+    flex: 1;
+  }
+  .content {
+    height: 70vh;
+    font-size: larger;
+    padding-top: 80px;
+    padding-left: 50px;
+  }
   .small {
-    font-size: large;
-    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
   }
   .btn {
     background-color: #f2b92b;
-    font-family: cursive;
+    /* font-family: cursive; */
     color: white;
+    font-weight: 500;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 10px;
     text-transform: uppercase;
-    font-size: xx-large;
+    font-size: large;
   }
   .btn:hover {
-    background-color: #e6e600;
+    background-color: #ffcd4e;
   }
   .about span {
     margin-right: 20px;
-    color: #f2b92b;
+    /* color: #f2b92b; */
   }
   .abt{
     cursor: pointer;
   }
-  .abt:hover{
+  .abt a:hover{
+    color: #f2b92b;
+  }
+  .sign .in{
+    background-color:#f2b92b;
+    border-radius: 10px 0 0 10px;
+    padding: 8px 10px;
     color: white;
-    background-color:#f2b92b ;
-    transition-duration:400ms;
+    border: 1.5px solid #f2b92b;
+  }
+  .sign .up{
+    border: 1.5px solid #f2b92b;
+    border-radius: 0 10px 10px 0;
+    padding: 8px 12px;
+    color: #f2b92b;
+    /* font-weight: bold; */
+  }
+  .sign .in:hover{
+    background-color: #ffcd4e;
+    border-color: #ffcd4e;
+  }
+  .sign .up:hover{
+    background-color: #f2b92b;
+    color: white;
   }
   .imagein {
-    position: absolute;
-    top: 80px;
-    right: 10px;
-    margin-right: 10px;
-    margin-top: 50px;
     width: 800px;
     height: 500px;
-    opacity: 0.9;
+    width: 500px;
   }
-  .design {
-    position: absolute;
-    width: 100px;
-    margin-top: 0px;
-    bottom: 100px;
-    left: 98%;
-    opacity: 0.4;
-    transform: rotate(50deg);
+  #second-div{
+    display: flex;
+    background: linear-gradient(to bottom,white, rgba(254, 204, 44, 1));
+    /* background-color: #f2b92b; */
+    padding: 50px 10px 0 10px;
+    /* padding-right: 10px; */
+  }
+  #second-div div{
+    flex: 1;
+  }
+  #second-div img{
+    width: 70%;
+    height: 90%;
+  }
+  #second-div .working{
+    font-size: 20px;
   }
   .footer {
-  background-color: #f2b92b;
-  color: white;
-  padding: 30px 20px; /* Reduced padding for decreased height */
-  text-align: center;
+    background-color: black;
+    color: white;
+    padding: 30px 20px; /* Reduced padding for decreased height */
+    text-align: center;
+  }
+  .foot-highlight{
+    color: white;
+  }
+  .footer-content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .footer-section {
+    margin-bottom: 20px; /* Reduced margin for compactness */
+  }
+
+  .footer-section h3 {
+    font-size: 1.2rem; /* Slightly reduced font size */
+    margin-bottom: 8px;
+  }
+
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  .footer-section ul li {
+    margin-bottom: 3px; /* Reduced margin for compactness */
+  }
+  .footer-section ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  .footer-bottom {
+    margin-top: 20px; /* Reduced margin for compactness */
+    font-size: 0.8rem;
+  }
   
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.footer-section {
-  margin-bottom: 20px; /* Reduced margin for compactness */
-}
-
-.footer-section h3 {
-  font-size: 1.2rem; /* Slightly reduced font size */
-  margin-bottom: 8px; /* Reduced margin for compactness */
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-section ul li {
-  margin-bottom: 3px; /* Reduced margin for compactness */
-}
-
-.footer-section ul li a {
-  color: white;
-  text-decoration: none;
-}
-
-.footer-bottom {
-  margin-top: 20px; /* Reduced margin for compactness */
-  font-size: 0.8rem;
-}
 
 </style>
 </head>
 <body>
   <header>
     <div>
-      <span class="highlight"><b>Brain</b></span><span class="highlight-yellow"><b>Trek</b></span>
+      <span class="highlight">Brain</span><span class="highlight-yellow">Trek</span>
     </div>
     <nav class="about">
-      <span class="abt">How it works?</span>
-      <span class="abt">Features</span>
-      <span class="abt">About Us</span>
+      <span class="abt"><a href="#second-div">How it works?</a></span>
+      <span class="abt"><a href="#footer">Contact Us</a></span>
+      <span class="sign"><a href="{{ url_for('signin') }}" class="in">Signin</a><a href="{{ url_for('signup') }}" class="up">Signup</a></span>
     </nav>
   </header>
-  <div class="content">
-    <h1><span class="highlighted">Explore, Learn, and <br><br>Have Fun with our<br><br>General Knowledge Quizzes</span></h1>
-    <p class="small">| We help you to prepare for exams with quizzes.</p>
-    <a href="{{ url_for('signin') }}"><button class="btn">Start Solving</button></a>
+  <div class="mid-div">
+    <div class="content">
+      <h1 class="fredericka-the-great-regular"><span class="highlighted">Explore, Learn, and <br>Have Fun with our<br>AI generated dynamic Quizzes</span></h1>
+        <p class="small">We help you to prepare for exams with quizzes.</p>
+        <a href="{{ url_for('signin') }}"><button class="btn">Start Solving</button></a>
+    </div>
+    <div class="image">
+        <img class="imagein" src="https://img.freepik.com/free-vector/flat-people-asking-questions-illustration_23-2148910626.jpg?t=st=1715679218~exp=1715682818~hmac=4e88fb39783d991b3e9eb92df3b5a630d99a68e79b4a3f972b53b568f6541b1c&w=740" alt="main-img">
+        <!-- <img class="imagein" src="https://img.freepik.com/free-vector/thoughtful-woman-with-laptop-looking-big-question-mark_1150-39362.jpg?t=st=1715678510~exp=1715682110~hmac=9aeb73fa7687969ac64fac80c69ca96f3bd0ac83dd34607b6bc5032ab9207be9&w=740" alt="main-img"> -->
+    </div>
   </div>
-  <div class="image">
-    <img class="imagein" src="https://st3.depositphotos.com/16959514/32686/v/600/depositphotos_326860374-stock-illustration-people-ask-question-confused-person.jpg" alt="main-img">
+
+  <div id="second-div">
+    <div>
+      <img src="https://i.ibb.co/3yL93gY/college-entrance-exam-concept-illustration-114360-10502-removebg-preview.png" alt="college-entrance-exam-concept-illustration-114360-10502-removebg-preview" border="0"><br />
+    </div>
+    <div class="working">
+      <h2>Dive into Dynamic AI-Generated Quizzes!</h2>
+      <p>Unleash the power of artificial intelligence as you engage in quizzes that adapt to your knowledge level and interests,<br> providing a personalized learning experience like never before. <br><br>
+        From history to science, literature to current affairs, our quizzes cover a myriad of subjects to cater to every curious mind. Join us as we make learning an exciting adventure!</p>
+    </div>
   </div>
-  <img class="design" src="https://i.pinimg.com/736x/01/b6/d2/01b6d278bdc2fb92452736ee6db4f89e.jpg" alt="design">
-  <footer class="footer">
+
+  <footer class="footer" id="footer">
     <div class="footer-content">
+      <div class="footer-section" style="margin-top: 70px;">
+        <span class="highlight foot-highlight">Brain</span><span class="highlight-yellow">Trek</span>
+      </div>
       <div class="footer-section">
         <h3>About Us</h3>
         <p>BrainTrek provides high-quality educational resources and quizzes, <br>empowering learners to excel in their journey.</p>
