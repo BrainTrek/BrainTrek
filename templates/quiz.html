@@ -1,112 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrainTrek</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        .head {
-            background-color: #FECC2C;
-            color: white;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrainTrek</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Kolker+Brush&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
 
-        .brain {
-            color: black;
-        }
+    .head {
+        background-color: #FECC2C;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        width: 100%;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
 
-        .profile-icon {
-            color: white;
-            font-size: large;
-            text-decoration: none;
-            transition-duration: 0.4s;
-            cursor: pointer;
-        }
+    .head h1 {
+        margin-left: 20px;
+    }
 
-        .profile-icon:hover {
-            background-color: white;
-            color: #FECC2C;
-            border-radius: 50%;
-            padding: 5px;
-        }
+    .profile-icon {
+        color: rgb(0, 0, 0);
+        font-size: large;
+        text-decoration: none;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        margin-right: 20px;
+    }
 
-        .answer {
-            display: none;
-        }
+    .profile-icon .text {
+      padding: 5px 10px;
+    }
 
-        #score {
-            display: none;
-        }
+    .brain {
+      color: black;
+    }
 
-        #mainButton {
-            display: none;
-        }
-    </style>
+    .profile-icon:hover {
+      background-color: white;
+      color: #FECC2C;
+      border-radius: 10%;
+      padding: 5px;
+    }
+
+    #quiz {
+      background-color: white;
+      max-width: 800px;
+      padding: 20px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    #quiz h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      margin-bottom: 10px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      outline: none;
+      border: 1px solid #FECC2C;
+      background-color: white;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:checked {
+      background-color: #FECC2C;
+    }
+
+    label {
+      font-weight: normal;
+      margin-right: 15px;
+    }
+
+    .answer {
+      display: none;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    hr {
+      margin: 20px 0;
+    }
+
+    #submitButton {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #FECC2C;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    #score {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      display: none;
+    }
+
+    #scoreValue {
+      color: #FECC2C;
+    }
+
+    .cinzel-font {
+      font-family: "Cinzel", serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+    }
+  </style>
 </head>
-<body>
-    <div class="head">
-        <h1><span class="brain">Brain</span>Trek</h1>
-        <a href="{{ url_for('logout') }}" class="profile-icon"> &emsp;LogOut&emsp;<i class="fas fa-user-circle"></i></a>
-    </div>
-    <div id="quiz">
-        {% for i, question in obj | enumerate %}
-            <p>Q{{ i + 1 }}. {{ question["Question"] }}</p>
-            {% for option, text in question["Options"].items() %}
-                <input type="radio" id="{{ option }}-Q{{ i + 1 }}" name="Q{{ i + 1 }}" value="{{ option }}">
-                <label for="{{ option }}-Q{{ i + 1 }}">{{ text }}</label><br>
-            {% endfor %}
-            <p class="answer">{{ question["Answer"] }}</p>
-            <hr>
-        {% endfor %}
-        <button id="submitButton">Submit</button>
-        <p id="score">Score: <span id="scoreValue">0</span>/{{ obj | length }}</p>
-        <a href="{{ url_for('main') }}" class="profile-icon"><button id="mainButton">Go to Main Page<i class="fas fa-home"></i></button></a>
-    </div>
 
-    <script>
-        // Custom enumerate function
-        function enumerate(iterable, start = 0) {
-            return iterable.map((value, index) => [index + start, value]);
+<body>
+  <div class="head">
+    <h1 class="cinzel-font"><span class="brain">Brain</span>Trek</h1>
+    <a href="{{ url_for('logout') }}" class="profile-icon"> <span class="text">LogOut&nbsp;</span><i class="fas fa-user-circle"></i></a>
+  </div>
+
+  <div id="quiz">
+    <h2>Quiz Time!</h2>
+    {% for i, question in obj | enumerate %}
+    <div class="question">
+      <p>{{ i + 1 }}. {{ question["Question"] }}</p>
+      {% for option, text in question["Options"].items() %}
+      <input type="radio" id="{{ option }}-Q{{ i + 1 }}" name="Q{{ i + 1 }}" value="{{ option }}">
+      <label for="{{ option }}-Q{{ i + 1 }}">{{ text }}</label><br>
+      {% endfor %}
+      <p class="answer" id="correct-answer-{{ i + 1 }}">{{ question["Answer"] }}</p>
+      <hr>
+    </div>
+    {% endfor %}
+    <button id="submitButton">Submit</button>
+    <p id="score">Score: <span id="scoreValue">0</span>/{{ obj | length }}</p>
+  </div>
+
+  <script>
+    const questions = document.querySelectorAll('.question');
+    const answers = document.querySelectorAll('.answer');
+    const scoreElement = document.getElementById('score');
+    const scoreValue = document.getElementById('scoreValue');
+    const submitButton = document.getElementById('submitButton');
+
+    submitButton.addEventListener('click', function () {
+      let score = 0;
+
+      questions.forEach((question, index) => {
+        const selectedOption = question.querySelector('input[type="radio"]:checked');
+        const correctAnswer = question.querySelector('.answer');
+        const correctAnswerElement = document.getElementById(`correct-answer-${index + 1}`);
+
+        if (selectedOption && selectedOption.value === correctAnswer.textContent) {
+          score++;
         }
 
-        const submitButton = document.getElementById("submitButton");
-        const scoreValue = document.getElementById("scoreValue");
-        const mainButton = document.getElementById("mainButton");
-        const quiz = document.getElementById("quiz");
+        correctAnswerElement.style.display = 'block';
+      });
 
-        submitButton.addEventListener("click", function () {
-            let score = 0;
-            for (let i = 1; i <= quiz.getElementsByTagName("p").length / 2; i++) {
-                const selectedOption = document.querySelector(`input[name="Q${i}"]:checked`);
-                if (selectedOption) {
-                    const correctAnswerElement = quiz.querySelector(`.answer:nth-of-type(${2 * i})`);
-                    const correctAnswerText = correctAnswerElement.textContent.trim();
-
-                    // Extract selected option part from correct answer text
-                    const selectedOptionPart = correctAnswerText.split('. ')[0].trim();
-
-                    console.log("Selected Option:", selectedOption.value);
-                    console.log("Correct Answer:", selectedOptionPart);
-
-                    if (selectedOption.value === selectedOptionPart) {
-                        score++;
-                    }
-
-                    // Display correct answer
-                    correctAnswerElement.style.display = "block";
-                }
-            }
-
-            // Display score and main button
-            document.getElementById("score").style.display = "block";
-            scoreValue.textContent = score;
-            document.getElementById("mainButton").style.display = "block";
-        });
-    </script>
+      scoreValue.textContent = score;
+      scoreElement.style.display = 'block';
+    });
+  </script>
 </body>
+
 </html>

@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BrainTrek</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Include Font Awesome CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arizonia&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@600&family=Fredericka+the+Great&family=Kolker+Brush&family=Vollkorn+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
+
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
+
         .container {
             display: flex;
             height: 100vh;
         }
+
         .left-partition {
             flex: 1;
             background-color: white;
@@ -22,7 +30,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            margin-top: 50px;
         }
+
         .right-partition {
             flex: 1;
             background-color: #f2b92b;
@@ -32,16 +42,32 @@
             justify-content: center;
             align-items: center;
         }
+
+        .form-container {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .signup-heading {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: black;
+            text-align: center;
+        }
+
         .signup-form {
             text-align: center;
         }
+
         .form-input {
             margin-bottom: 10px;
-            width: 250px;
-            padding: 8px;
+            width: 70%;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
         }
+
         .signup-button {
             padding: 10px 20px;
             background-color: #f2b92b;
@@ -50,7 +76,10 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            height: 40px;
+            width: 100px;
         }
+
         .signin-button {
             padding: 10px 20px;
             background-color: white;
@@ -59,47 +88,91 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            height: 40px;
+            width: 100px;
         }
-        h2,.h11 {
+
+        .signupGoogle-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            height: 40px;
+            width: 200px;
+            text-align: center;
+            background-color: #f2b92b;
+            color: white;
+        }
+
+        svg {
+            vertical-align: sub;
+        }
+
+        h2 {
             color: black;
             font-family: Arial, sans-serif;
             text-align: center;
             
         }
-        .wb{
-            color: black;
-            font-family: cursive;
-            font-size: 3em;
 
-        }
+
         p{
             font-weight: bold;
         }
+
+        .cinzel-font {
+            font-family: "Cinzel", serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-size: 45px;
+            font-style: normal;
+        }
+
+        .brain {
+            color: black;
+        }
+
+        .vollkorn-sc-regular {
+            font-family: "Vollkorn SC", serif;
+            font-weight: 400;
+            font-style: normal;
+            color: black;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <div class="left-partition">
-            <h1 class="h11">CREATE ACCOUNT</h1>
-            <form class='signup-form' action="{{ url_for('signup') }}" method="post">
-                <input type="name" class="form-input" placeholder="Name" name="name" required>
-                <br>
-                <input type="email" class="form-input" placeholder="Email" name="email" required>
-                <br>
-                <input type="password" class="form-input" placeholder="Password" name="password" required>
-                <br>
-                <input type="password" class="form-input" placeholder="Confirm Password" name="confirm-password" required>
-                <br>
-                <button class="signup-button" type='submit'>SIGN UP</button>
-                <br>
-            </form>
-            <p>OR</p>
-            <a href="{{ url_for('signin_google') }}"><button class="signup-button">Sign Up with Google</button></a>
+            <h1 class="signup-heading">CREATE ACCOUNT</h1>
+            <div class="form-container">
+                <form class='signup-form' action="{{ url_for('signup') }}" method="post">
+                    <input type="name" class="form-input" placeholder="Name" name="name" required>
+                    <br>
+                    <input type="email" class="form-input" placeholder="Email" name="email" required>
+                    <br>
+                    <input type="password" class="form-input" placeholder="Password" name="password" required>
+                    <br>
+                    <input type="password" class="form-input" placeholder="Confirm Password" name="confirm-password" required>
+                    <br><br><br><br>
+                    <button class="signup-button" type='submit'>SIGN UP</button>
+                    <br>
+                </form>
+                <center><p>OR</p></center>
+                <center><a href="{{ url_for('signin_google') }}"><button class="signupGoogle-button"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18" height="18" viewBox="0,0,256,256">
+                    <g fill-opacity="0" fill="#dddddd" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,256v-256h256v256z" id="bgRectangle"></path></g><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="none" stroke-linecap="butt" stroke-linejoin="none" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path transform="scale(5.33333,5.33333)" d="M24,44c-11.045,0 -20,-8.955 -20,-20c0,-11.045 8.955,-20 20,-20c5.268,0 10.046,2.053 13.618,5.382l-5.657,5.657c-2.119,-1.885 -4.902,-3.039 -7.961,-3.039c-5.039,0 -9.345,3.108 -11.123,7.51l-0.00667,-0.00489c-0.56128,1.38829 -0.87033,2.90552 -0.87033,4.49489c0,1.42607 0.24881,2.79407 0.70538,4.06295l0.01162,-0.00895c1.664,4.629 6.081,7.946 11.283,7.946c2.715,0 5.211,-0.909 7.219,-2.43l0.00527,0.00446c0.00021,-0.00016 0.00042,-0.00032 0.00062,-0.00047l-0.00589,-0.00499c-0.0007,0.0007 -0.00139,0.00091 -0.00209,0.00131c1.82797,-1.38405 3.25134,-3.27644 4.05034,-5.47075c0.01206,-0.03312 0.02397,-0.0663 0.03575,-0.09956h-11.303v-8h18v0.083h1.611c0.251,1.267 0.389,2.576 0.389,3.917c0,8.75744 -5.39073,13.83746 -6.43622,14.69739c-3.56483,3.29154 -8.32962,5.30261 -13.56378,5.30261zM31.216,33.571c0.0003,-0.0003 0.00061,-0.00052 0.00091,-0.00069c-0.0003,0.00023 -0.00061,0.00046 -0.00091,0.00069z" id="strokeMainSVG" fill="#000000" stroke="#000000" stroke-width="4" stroke-linejoin="round"></path><g transform="scale(5.33333,5.33333)" stroke="none" stroke-width="1" stroke-linejoin="miter"><path d="M43.611,20.083h-1.611v-0.083h-18v8h11.303c-1.649,4.657 -6.08,8 -11.303,8c-6.627,0 -12,-5.373 -12,-12c0,-6.627 5.373,-12 12,-12c3.059,0 5.842,1.154 7.961,3.039l5.657,-5.657c-3.572,-3.329 -8.35,-5.382 -13.618,-5.382c-11.045,0 -20,8.955 -20,20c0,11.045 8.955,20 20,20c11.045,0 20,-8.955 20,-20c0,-1.341 -0.138,-2.65 -0.389,-3.917z" fill="#ffc107"></path><path d="M6.306,14.691l6.571,4.819c1.778,-4.402 6.084,-7.51 11.123,-7.51c3.059,0 5.842,1.154 7.961,3.039l5.657,-5.657c-3.572,-3.329 -8.35,-5.382 -13.618,-5.382c-7.682,0 -14.344,4.337 -17.694,10.691z" fill="#ff3d00"></path><path d="M24,44c5.166,0 9.86,-1.977 13.409,-5.192l-6.19,-5.238c-2.008,1.521 -4.504,2.43 -7.219,2.43c-5.202,0 -9.619,-3.317 -11.283,-7.946l-6.522,5.025c3.31,6.477 10.032,10.921 17.805,10.921z" fill="#4caf50"></path><path d="M43.611,20.083h-1.611v-0.083h-18v8h11.303c-0.792,2.237 -2.231,4.166 -4.087,5.571c0.001,-0.001 0.002,-0.001 0.003,-0.002l6.19,5.238c-0.438,0.398 6.591,-4.807 6.591,-14.807c0,-1.341 -0.138,-2.65 -0.389,-3.917z" fill="#1976d2"></path></g></g>
+                    </svg>&nbsp;&nbsp;Sign Up with Google</button></a></center>
+            </div>
         </div>
         <div class="right-partition">
-            <h1 class="wb">WELCOME BACK!!!</h1>
-            <h2>Let's dive into another round of <br> learning and discovery...</h2>
-            <br>
+            <h1 class="cinzel-font"><span class="brain">Brain</span>Trek</h1>
+            <h3 class="vollkorn-sc-regular">Already had an account <br> Then continue testing your <br> KNOWLEDGE</h3>
+            <br><br>
             <a href="{{ url_for('signin') }}"><button class="signin-button">SIGN IN</button></a>
         </div>
     </div>
